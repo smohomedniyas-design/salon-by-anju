@@ -81,7 +81,9 @@ export default function Contact() {
               <h3 className="font-playfair text-base sm:text-lg font-semibold text-gold-200 mb-3 sm:mb-4">Follow Us</h3>
               <div className="flex gap-3 sm:gap-4">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/salon_by_anju"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2.5 sm:p-3 rounded-full border border-gold-400/20 text-gold-400 hover:bg-gold-400 hover:text-black-900 transition-all duration-300"
                   aria-label="Instagram"
                 >
@@ -89,7 +91,9 @@ export default function Contact() {
                   <Instagram size={20} className="hidden sm:block" />
                 </a>
                 <a
-                  href="#"
+                  href="https://web.facebook.com/profile.php?id=61572393601297"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2.5 sm:p-3 rounded-full border border-gold-400/20 text-gold-400 hover:bg-gold-400 hover:text-black-900 transition-all duration-300"
                   aria-label="Facebook"
                 >
@@ -97,9 +101,11 @@ export default function Contact() {
                   <Facebook size={20} className="hidden sm:block" />
                 </a>
                 <a
-                  href="#"
+                  href="https://wa.me/94716997670"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2.5 sm:p-3 rounded-full border border-gold-400/20 text-gold-400 hover:bg-gold-400 hover:text-black-900 transition-all duration-300"
-                  aria-label="Message"
+                  aria-label="WhatsApp"
                 >
                   <MessageCircle size={18} className="sm:hidden" />
                   <MessageCircle size={20} className="hidden sm:block" />

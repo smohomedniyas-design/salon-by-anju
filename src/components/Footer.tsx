@@ -1,4 +1,4 @@
-import { Heart, Phone, MapPin } from 'lucide-react';
+import { Heart, Phone, MapPin, Instagram, Facebook, MessageCircle } from 'lucide-react';
 
 const footerLinks = [
   { name: 'Home', href: '#home' },
@@ -39,6 +39,17 @@ export default function Footer() {
             <div className="flex items-center gap-2 text-gold-100/50 text-xs sm:text-sm">
               <MapPin size={14} className="text-gold-400 shrink-0" />
               <span>Millennium City, Athurugiriya</span>
+            </div>
+            <div className="flex gap-3 mt-4">
+              <a href="https://www.instagram.com/salon_by_anju" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-gold-400/20 text-gold-400 hover:bg-gold-400 hover:text-black-900 transition-all duration-300" aria-label="Instagram">
+                <Instagram size={14} />
+              </a>
+              <a href="https://web.facebook.com/profile.php?id=61572393601297" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-gold-400/20 text-gold-400 hover:bg-gold-400 hover:text-black-900 transition-all duration-300" aria-label="Facebook">
+                <Facebook size={14} />
+              </a>
+              <a href="https://wa.me/94716997670" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-gold-400/20 text-gold-400 hover:bg-gold-400 hover:text-black-900 transition-all duration-300" aria-label="WhatsApp">
+                <MessageCircle size={14} />
+              </a>
             </div>
           </div>
 
