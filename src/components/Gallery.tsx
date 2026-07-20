@@ -21,6 +21,11 @@ export default function Gallery() {
   const [galleryImages, setGalleryImages] = useState<GalleryItem[]>(defaultGalleryImages);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [selectedCategory]);
 
   useEffect(() => {
     fetch('/api/gallery')
@@ -39,6 +44,9 @@ export default function Gallery() {
     selectedCategory === 'All'
       ? galleryImages
       : galleryImages.filter((img) => img.category === selectedCategory);
+
+  const visibleImages = filteredImages.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredImages.length;
 
   const handleNext = () => {
     if (selectedImage === null) return;
@@ -101,7 +109,7 @@ export default function Gallery() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <AnimatePresence mode="popLayout">
-            {filteredImages.map((image, index) => (
+            {visibleImages.map((image, index) => (
               <motion.div
                 key={image.id}
                 layout
@@ -132,6 +140,23 @@ export default function Gallery() {
             ))}
           </AnimatePresence>
         </div>
+
+        {/* Load More */}
+        {hasMore && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mt-10"
+          >
+            <button
+              onClick={() => setVisibleCount((c) => c + 6)}
+              className="px-8 py-3 border border-gold-400/40 text-gold-300 font-semibold rounded-full hover:bg-gold-400/10 hover:border-gold-400 transition-all duration-300 text-sm uppercase tracking-wider"
+            >
+              Load More
+            </button>
+          </motion.div>
+        )}
 
         <AnimatePresence>
           {selectedImage && selectedImageData && (
