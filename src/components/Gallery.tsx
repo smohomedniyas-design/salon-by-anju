@@ -14,7 +14,7 @@ const defaultGalleryImages: GalleryItem[] = [
   { id: 2, title: 'Professional Facial', category: 'Facial', image: '/images/facial.jpg' },
   { id: 3, title: 'Hair Coloring', category: 'Hair', image: '/images/hair-color.jpg' },
   { id: 4, title: 'Nail Art & Design', category: 'Nails', image: '/images/nails.jpg' },
-  { id: 5, title: 'Salon Interior', category: 'Studio', image: '/images/salon-interior.jpg' },
+  { id: 5, title: 'Our Salon', category: 'Studio', image: '/images/salon-interior.jpg' },
 ];
 
 export default function Gallery() {

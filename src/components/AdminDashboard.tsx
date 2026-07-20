@@ -911,13 +911,18 @@ export default function AdminDashboard() {
                   </div>
                   <div>
                     <label className="block text-gold-100/50 text-xs mb-1">Category</label>
-                    <input
-                      type="text"
+                    <select
                       value={newGalleryItem.category}
                       onChange={(e) => setNewGalleryItem({ ...newGalleryItem, category: e.target.value })}
-                      placeholder="e.g. Bridal, Hair, Nails"
                       className="w-full px-4 py-3 bg-black-700 border border-gold-400/20 rounded-lg text-white focus:outline-none focus:border-gold-400"
-                    />
+                    >
+                      <option value="Bridal">Bridal</option>
+                      <option value="Hair">Hair</option>
+                      <option value="Nails">Nails</option>
+                      <option value="Facial">Facial</option>
+                      <option value="Waxing">Waxing</option>
+                      <option value="Studio">Studio</option>
+                    </select>
                   </div>
                   <label className="cursor-pointer flex items-center justify-center gap-2 px-6 py-3 bg-gold-400 text-black-900 font-semibold rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap">
                     <Upload size={18} />
@@ -963,12 +968,18 @@ export default function AdminDashboard() {
                       </div>
                       <div>
                         <label className="block text-gold-100/50 text-xs mb-1">Category</label>
-                        <input
-                          type="text"
+                        <select
                           value={item.category}
                           onChange={(e) => handleGalleryChange(item.id, 'category', e.target.value)}
                           className="w-full px-3 py-2 bg-black-700 border border-gold-400/20 rounded-lg text-white text-sm focus:outline-none focus:border-gold-400"
-                        />
+                        >
+                          <option value="Bridal">Bridal</option>
+                          <option value="Hair">Hair</option>
+                          <option value="Nails">Nails</option>
+                          <option value="Facial">Facial</option>
+                          <option value="Waxing">Waxing</option>
+                          <option value="Studio">Studio</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -987,8 +998,8 @@ export default function AdminDashboard() {
               </div>
             </div>
 
+            {/* Main Website Images */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              
               {/* Hero Image Card */}
               <div className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">
                 <h3 className="text-lg font-semibold text-gold-200 mb-2">Hero Background</h3>
@@ -1055,6 +1066,42 @@ export default function AdminDashboard() {
                 </label>
               </div>
 
+            </div>
+
+            {/* Service Section Images */}
+            <div>
+              <h2 className="text-xl font-bold text-gold-200 mb-2">Service Section Images</h2>
+              <p className="text-gold-100/50 text-sm mb-6">Replace the images shown on each service card on the website.</p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { label: 'Face Treatments', key: 'face-treatments', current: '/images/facial.jpg' },
+                  { label: 'Hair Services', key: 'hair-services', current: '/images/hair-color.jpg' },
+                  { label: 'Hand & Foot Care', key: 'hand-foot-care', current: '/images/nails.jpg' },
+                  { label: 'Waxing Services', key: 'waxing-services', current: '/images/salon-interior.jpg' },
+                  { label: 'Botox & Keratin', key: 'botox-keratin', current: '/images/hair-color.jpg' },
+                  { label: 'Bridal Packages', key: 'bridal-packages', current: '/images/bridal.jpg' },
+                ].map((svc) => (
+                  <div key={svc.key} className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">
+                    <h3 className="text-base font-semibold text-gold-200 mb-2">{svc.label}</h3>
+                    <div className="h-36 bg-black-900 rounded-xl mb-4 overflow-hidden border border-gold-400/20">
+                      <img src={svc.current} className="w-full h-full object-cover" alt={svc.label} />
+                    </div>
+                    <label className="cursor-pointer mt-auto flex items-center justify-center gap-2 w-full py-2.5 bg-black-700 border border-gold-400/30 text-gold-200 text-sm font-semibold rounded-lg hover:border-gold-400 transition-colors">
+                      <Upload size={16} />
+                      Replace Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) handleUploadStaticImage(file, `salon-assets/service-${svc.key}`, `${svc.label} image updated!`);
+                        }}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}

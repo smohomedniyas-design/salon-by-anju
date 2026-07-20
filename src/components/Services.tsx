@@ -34,6 +34,24 @@ const imageMap: Record<string, string> = {
   'Bridal Packages': '/images/bridal.jpg',
 };
 
+const cloudinaryBase = 'https://res.cloudinary.com/pvr1nexp/image/upload/salon-assets';
+
+const serviceImageKeys: Record<string, string> = {
+  'Face Treatments': 'service-face-treatments',
+  'Hair Services': 'service-hair-services',
+  'Hand & Foot Care': 'service-hand-foot-care',
+  'Waxing Services': 'service-waxing-services',
+  'Botox Treatment (Prime Brand)': 'service-botox-keratin',
+  'Keratin Treatment (Prime Brand)': 'service-botox-keratin',
+  'Bridal Packages': 'service-bridal-packages',
+};
+
+function getServiceImage(category: string): string {
+  const key = serviceImageKeys[category];
+  if (key) return `${cloudinaryBase}/${key}.jpg`;
+  return imageMap[category] || '/images/salon-interior.jpg';
+}
+
 const descriptionMap: Record<string, string> = {
   'Face Treatments': 'Eyebrow shaping, threading, facials, clean-ups, and pimple treatments for radiant skin.',
   'Hair Services': 'Precision haircuts, coloring, conditioning, oil massages, and professional styling.',
@@ -127,7 +145,7 @@ export default function Services() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {categories.map((service, index) => {
             const Icon = iconMap[service.category] || Sparkles;
-            const image = imageMap[service.category] || '/images/salon-interior.jpg';
+            const image = getServiceImage(service.category);
             const desc = descriptionMap[service.category] || 'Expert salon care with premium products.';
 
             return (
