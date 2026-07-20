@@ -63,9 +63,11 @@ export default function Gallery() {
   const visibleImages = filteredImages.slice(0, visibleCount);
   const hasMore = visibleCount < filteredImages.length;
 
-  // Masonry: 3 cols on lg, 2 on sm
-  const masonryCols3 = buildColumns(visibleImages, 3);
-  const masonryCols2 = buildColumns(visibleImages, 2);
+  // Masonry: 3 cols on lg, 2 on sm — cap at 2 rows worth of images
+  const masonryLimit3 = Math.min(visibleImages.length, 6);
+  const masonryLimit2 = Math.min(visibleImages.length, 4);
+  const masonryCols3 = buildColumns(visibleImages.slice(0, masonryLimit3), 3);
+  const masonryCols2 = buildColumns(visibleImages.slice(0, masonryLimit2), 2);
 
   const handleNext = () => {
     if (selectedImage === null) return;
@@ -88,13 +90,13 @@ export default function Gallery() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.04 }}
       onClick={() => setSelectedImage(image.id)}
-      className="group relative overflow-hidden rounded-xl cursor-pointer mb-4"
+      className="group relative overflow-hidden rounded-xl cursor-pointer mb-3"
     >
       <img
         src={image.image}
         alt={image.title}
         className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        style={{ display: 'block' }}
+        style={{ display: 'block', maxHeight: '220px' }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
         <div>
