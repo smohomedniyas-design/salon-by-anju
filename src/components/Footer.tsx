@@ -25,7 +25,7 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5 sm:gap-3 mb-3 sm:mb-4">
               <img
-                src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575069/salon-assets/about-image.jpg"
+                src="/uploads/upload_1.jpeg"
                 alt="Salon by Anju"
                 className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-gold-400/40 object-cover"
               />
