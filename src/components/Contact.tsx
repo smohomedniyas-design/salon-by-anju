@@ -126,16 +126,16 @@ export default function Contact() {
               
               {/* Overlay Card */}
               <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-                <div className="bg-black-800/70 backdrop-blur-sm border border-gold-400/20 rounded-lg sm:rounded-xl p-4 sm:p-6">
-                  <h3 className="font-playfair text-base sm:text-xl font-semibold text-gold-200 mb-1.5 sm:mb-2">
+                <div className="bg-black-800/40 backdrop-blur-sm border border-gold-400/20 rounded-lg sm:rounded-xl p-3 sm:p-4">
+                  <h3 className="font-playfair text-sm sm:text-base font-semibold text-gold-200 mb-1">
                     Book Your Appointment
                   </h3>
-                  <p className="text-gold-100/60 text-xs sm:text-sm mb-3 sm:mb-4">
+                  <p className="text-gold-100/60 text-xs mb-2 sm:mb-3">
                     Walk-ins welcome, but appointments are recommended for the best experience.
                   </p>
                   <a
                     href="tel:0716997670"
-                    className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 gold-gradient-bg text-black-900 font-semibold rounded-full text-xs sm:text-sm hover:shadow-lg hover:shadow-gold-400/30 transition-all duration-300"
+                    className="inline-flex items-center gap-2 px-4 py-2 gold-gradient-bg text-black-900 font-semibold rounded-full text-xs hover:shadow-lg hover:shadow-gold-400/30 transition-all duration-300"
                   >
                     <Phone size={14} className="sm:hidden" />
                     <Phone size={16} className="hidden sm:block" />
