@@ -38,7 +38,7 @@ export default function About() {
           >
             <div className="relative">
               <img
-                src="/images/facial.jpg"
+                src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575069/salon-assets/about-image.jpg"
                 alt="Beauty Treatment"
                 className="w-full h-[350px] sm:h-[450px] lg:h-[500px] object-cover rounded-2xl"
               />
