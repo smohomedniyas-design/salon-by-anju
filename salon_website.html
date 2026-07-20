@@ -1,0 +1,2299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salon by Anju | Hair • Beauty • Bridal</title>
+  <meta name="description" content="Salon by Anju — Your premier destination for hair, beauty, and bridal services in Millennium City, Athurugiriya. Expert styling, facials, waxing, keratin, and bridal packages." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Lucide icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* =========================================================
+       CSS VARIABLES & RESET
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold-50:  #fffbea;
+      --gold-100: #fef3c7;
+      --gold-200: #fde68a;
+      --gold-300: #fcd34d;
+      --gold-400: #fbbf24;
+      --gold-500: #f59e0b;
+      --gold-600: #d97706;
+      --gold-700: #b45309;
+      --black-50:  #f5f5f5;
+      --black-100: #e0e0e0;
+      --black-200: #b3b3b3;
+      --black-300: #808080;
+      --black-400: #4d4d4d;
+      --black-500: #262626;
+      --black-600: #1a1a1a;
+      --black-700: #0f0f0f;
+      --black-800: #0a0a0a;
+      --black-900: #050505;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--black-800);
+      color: var(--black-100);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* =========================================================
+       SCROLLBAR
+    ========================================================= */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--black-800); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-400); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-300); }
+
+    /* =========================================================
+       UTILITY CLASSES
+    ========================================================= */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gold-gradient-bg {
+      background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f59e0b 100%);
+    }
+
+    .font-playfair { font-family: 'Playfair Display', serif; }
+    .font-lato { font-family: 'Lato', sans-serif; }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, #fbbf24 50%, transparent 100%);
+      max-width: 20rem;
+      margin: 1.5rem auto 0;
+    }
+
+    /* =========================================================
+       NAVBAR
+    ========================================================= */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      transition: background 0.5s, box-shadow 0.5s;
+    }
+
+    #navbar.scrolled {
+      background: rgba(5,5,5,0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 24px rgba(251,191,36,0.08);
+    }
+
+    .nav-inner {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4.5rem;
+    }
+
+    @media(min-width:640px) { .nav-inner { height: 5rem; } }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 2.75rem; width: 2.75rem;
+      border-radius: 50%;
+      border: 2px solid rgba(251,191,36,0.5);
+      object-fit: cover;
+    }
+
+    @media(min-width:640px) {
+      .nav-logo img { height: 3.5rem; width: 3.5rem; }
+    }
+
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      display: none;
+    }
+
+    @media(min-width:640px) { .nav-logo-text { display: block; } }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    @media(min-width:768px) { .nav-links { display: flex; } }
+
+    .nav-links a {
+      text-decoration: none;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(253,230,138,0.85);
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold-400); }
+
+    .btn-book {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--black-900);
+      text-decoration: none;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .btn-book:hover {
+      box-shadow: 0 8px 24px rgba(251,191,36,0.35);
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gold-400);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .hamburger:active { background: rgba(251,191,36,0.1); }
+    @media(min-width:768px) { .hamburger { display: none; } }
+
+    /* Mobile menu overlay */
+    #mobile-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    #mobile-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .mobile-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(5,5,5,0.85);
+      backdrop-filter: blur(4px);
+    }
+
+    .mobile-menu {
+      position: absolute;
+      top: 4.5rem; left: 0; right: 0;
+      background: rgba(10,10,10,0.99);
+      border-top: 1px solid rgba(251,191,36,0.2);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      transform: translateY(-1rem);
+      transition: transform 0.4s;
+    }
+
+    #mobile-overlay.open .mobile-menu { transform: translateY(0); }
+
+    .mobile-menu a {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: rgba(253,230,138,0.85);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.875rem;
+      padding: 1rem;
+      width: 100%;
+      border-radius: 0.5rem;
+      transition: color 0.3s, background 0.3s;
+    }
+
+    .mobile-menu a:hover { color: var(--gold-400); background: rgba(251,191,36,0.05); }
+
+    .mobile-menu .btn-book-mobile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--black-900);
+      width: 100%;
+      max-width: 20rem;
+      text-decoration: none;
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+    #home {
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(10,10,10,0.3) 0%,
+        rgba(10,10,10,0.7) 60%,
+        rgba(10,10,10,1) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      max-width: 56rem;
+      margin: 0 auto;
+    }
+
+    .hero-logo {
+      width: 8rem; height: 8rem;
+      border-radius: 50%;
+      border: 4px solid rgba(251,191,36,0.4);
+      box-shadow: 0 25px 50px rgba(120,53,15,0.3);
+      object-fit: cover;
+      margin: 0 auto 2rem;
+      display: block;
+      animation: fadeUp 1s ease both;
+    }
+
+    @media(min-width:640px) { .hero-logo { width: 12rem; height: 12rem; } }
+    @media(min-width:768px) { .hero-logo { width: 14rem; height: 14rem; } }
+
+    .hero-eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-300);
+      margin-bottom: 0.75rem;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+
+    @media(min-width:640px) { .hero-eyebrow { font-size: 0.875rem; } }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .hero-subtitle {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(253,230,138,0.8);
+      margin-bottom: 1.75rem;
+      animation: fadeUp 1s 0.7s ease both;
+    }
+
+    @media(min-width:640px) { .hero-subtitle { font-size: 1.125rem; letter-spacing: 0.2em; } }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 1s 0.9s ease both;
+    }
+
+    @media(min-width:640px) { .hero-meta { flex-direction: row; justify-content: center; } }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(253,230,138,0.7);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .hero-meta-item:hover { color: var(--gold-400); }
+
+    .hero-meta-divider {
+      display: none;
+      width: 1px;
+      height: 1rem;
+      background: rgba(251,191,36,0.3);
+    }
+
+    @media(min-width:640px) { .hero-meta-divider { display: block; } }
+
+    .hero-ctas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      animation: fadeUp 1s 1.1s ease both;
+    }
+
+    @media(min-width:640px) { .hero-ctas { flex-direction: row; justify-content: center; } }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.875rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--black-900);
+      text-decoration: none;
+      transition: box-shadow 0.3s, transform 0.3s;
+      width: 100%;
+      max-width: 16rem;
+      text-align: center;
+    }
+
+    @media(min-width:640px) { .btn-primary { width: auto; } }
+    .btn-primary:hover { box-shadow: 0 12px 32px rgba(251,191,36,0.35); transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 0.875rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold-300);
+      text-decoration: none;
+      border: 1px solid rgba(251,191,36,0.5);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      width: 100%;
+      max-width: 16rem;
+      text-align: center;
+    }
+
+    @media(min-width:640px) { .btn-outline { width: auto; } }
+    .btn-outline:hover { background: rgba(251,191,36,0.1); border-color: var(--gold-400); transform: translateY(-2px); }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(251,191,36,0.6);
+      animation: bounce 2s infinite;
+    }
+
+    /* =========================================================
+       ABOUT
+    ========================================================= */
+    #about {
+      padding: 5rem 1.5rem;
+      background: var(--black-900);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #about::before {
+      content:'';
+      position: absolute;
+      top: -8rem; left: -8rem;
+      width: 20rem; height: 20rem;
+      background: rgba(251,191,36,0.05);
+      border-radius: 50%;
+      filter: blur(4rem);
+    }
+
+    #about::after {
+      content:'';
+      position: absolute;
+      bottom: -8rem; right: -8rem;
+      width: 24rem; height: 24rem;
+      background: rgba(251,191,36,0.05);
+      border-radius: 50%;
+      filter: blur(4rem);
+    }
+
+    .about-grid {
+      max-width: 80rem;
+      margin: 0 auto;
+      display: grid;
+      gap: 2.5rem 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media(min-width:1024px) { .about-grid { grid-template-columns: 1fr 1fr; } }
+
+    .about-img-wrap {
+      position: relative;
+      order: 2;
+    }
+
+    @media(min-width:1024px) { .about-img-wrap { order: 1; } }
+
+    .about-img {
+      width: 100%;
+      height: 22rem;
+      object-fit: cover;
+      border-radius: 1rem;
+      display: block;
+    }
+
+    @media(min-width:640px) { .about-img { height: 28rem; } }
+    @media(min-width:1024px) { .about-img { height: 31rem; } }
+
+    .about-img-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 1rem;
+      border: 1px solid rgba(251,191,36,0.2);
+      pointer-events: none;
+    }
+
+    .about-years-card {
+      position: absolute;
+      bottom: -1.5rem; right: 0.5rem;
+      background: var(--black-700);
+      border: 1px solid rgba(251,191,36,0.3);
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    @media(min-width:640px) {
+      .about-years-card { bottom: -1.5rem; right: -1.5rem; padding: 1.5rem 2rem; }
+    }
+
+    .about-years-card p:first-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    @media(min-width:640px) { .about-years-card p:first-child { font-size: 2rem; } }
+
+    .about-years-card p:last-child {
+      font-size: 0.75rem;
+      color: rgba(253,230,138,0.7);
+      margin-top: 0.25rem;
+    }
+
+    .about-corner-tl {
+      position: absolute;
+      top: -0.75rem; left: -0.75rem;
+      width: 4rem; height: 4rem;
+      border-top: 2px solid rgba(251,191,36,0.4);
+      border-left: 2px solid rgba(251,191,36,0.4);
+      border-radius: 0.5rem 0 0 0;
+    }
+
+    .about-corner-br {
+      position: absolute;
+      bottom: -0.75rem; right: -0.75rem;
+      width: 4rem; height: 4rem;
+      border-bottom: 2px solid rgba(251,191,36,0.4);
+      border-right: 2px solid rgba(251,191,36,0.4);
+      border-radius: 0 0 0.5rem 0;
+    }
+
+    .about-content { order: 1; }
+    @media(min-width:1024px) { .about-content { order: 2; } }
+
+    .section-eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-400);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.75rem, 5vw, 3rem);
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-text {
+      color: rgba(253,230,138,0.6);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+
+    .features-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.875rem 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(251,191,36,0.1);
+      transition: border-color 0.3s;
+    }
+
+    .feature-card:hover { border-color: rgba(251,191,36,0.3); }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(253,230,138,0.9);
+      margin-bottom: 0.2rem;
+    }
+
+    .feature-card p { font-size: 0.8rem; color: rgba(253,230,138,0.5); }
+
+    /* =========================================================
+       STATS BANNER
+    ========================================================= */
+    #stats {
+      padding: 3.5rem 1.5rem;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #stats::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.05;
+      background-image: radial-gradient(circle at 1px 1px, #d4af37 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+
+    .stats-grid {
+      max-width: 72rem;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media(min-width:1024px) { .stats-grid { grid-template-columns: repeat(4,1fr); gap: 2rem; } }
+
+    .stat-item { text-align: center; }
+
+    .stat-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.5rem; height: 3.5rem;
+      border-radius: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    @media(min-width:640px) { .stat-value { font-size: 2.5rem; } }
+    @media(min-width:1024px) { .stat-value { font-size: 3rem; } }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(253,230,138,0.5);
+    }
+
+    @media(min-width:640px) { .stat-label { font-size: 0.8rem; } }
+
+    /* =========================================================
+       SERVICES
+    ========================================================= */
+    #services {
+      padding: 5rem 1.5rem;
+      background: #0a0a0a;
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .services-grid {
+      max-width: 80rem;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media(min-width:640px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:1024px) { .services-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .service-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid rgba(251,191,36,0.1);
+      transition: border-color 0.5s;
+      cursor: default;
+    }
+
+    .service-card:hover { border-color: rgba(251,191,36,0.3); }
+
+    .service-img-wrap {
+      position: relative;
+      height: 12rem;
+      overflow: hidden;
+    }
+
+    @media(min-width:640px) { .service-img-wrap { height: 14rem; } }
+
+    .service-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s;
+    }
+
+    .service-card:hover .service-img-wrap img { transform: scale(1.1); }
+
+    .service-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.5) 50%, transparent 100%);
+    }
+
+    .service-badge {
+      position: absolute;
+      top: 0.75rem; right: 0.75rem;
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-body { padding: 1.25rem; }
+
+    .service-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: rgba(253,230,138,0.9);
+      margin-bottom: 0.4rem;
+      transition: color 0.3s;
+    }
+
+    .service-card:hover .service-body h3 { color: var(--gold-400); }
+
+    .service-body p { font-size: 0.8rem; color: rgba(253,230,138,0.5); line-height: 1.6; }
+
+    .service-glow {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: rgba(251,191,36,0.05);
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .service-card:hover .service-glow { opacity: 1; }
+
+    /* =========================================================
+       TESTIMONIALS
+    ========================================================= */
+    #testimonials {
+      padding: 5rem 1.5rem;
+      background: var(--black-900);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-deco {
+      position: absolute;
+      color: var(--gold-400);
+      opacity: 0.07;
+      line-height: 1;
+      font-size: 8rem;
+      font-family: Georgia, serif;
+      pointer-events: none;
+    }
+
+    .testimonial-deco.tl { top: 1rem; left: 1rem; }
+    .testimonial-deco.br { bottom: 1rem; right: 1rem; transform: rotate(180deg); }
+
+    .testimonials-header { text-align: center; margin-bottom: 3rem; }
+
+    .carousel {
+      max-width: 52rem;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .carousel-viewport {
+      min-height: 20rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2.5rem;
+      overflow: hidden;
+    }
+
+    @media(min-width:640px) { .carousel-viewport { min-height: 16rem; padding: 0 3.5rem; } }
+
+    .testimonial-slide {
+      text-align: center;
+      width: 100%;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .stars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .star { color: var(--gold-400); font-size: 1.25rem; }
+
+    .testimonial-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-style: italic;
+      color: rgba(253,230,138,0.8);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .testimonial-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(253,230,138,0.9);
+    }
+
+    .testimonial-role {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(253,230,138,0.5);
+      margin-top: 0.25rem;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid rgba(251,191,36,0.2);
+      color: var(--gold-400);
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, color 0.3s, transform 0.1s;
+    }
+
+    .carousel-btn:hover { background: var(--gold-400); color: var(--black-900); }
+    .carousel-btn:active { transform: translateY(-50%) scale(0.92); }
+    .carousel-btn.prev { left: 0; }
+    .carousel-btn.next { right: 0; }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .dot {
+      height: 0.5rem;
+      border-radius: 9999px;
+      background: rgba(251,191,36,0.3);
+      cursor: pointer;
+      border: none;
+      transition: width 0.3s, background 0.3s;
+      width: 0.625rem;
+    }
+
+    .dot.active { background: var(--gold-400); width: 2rem; }
+    .dot:hover { background: rgba(251,191,36,0.5); }
+
+    /* =========================================================
+       PRICES
+    ========================================================= */
+    #prices {
+      padding: 5rem 1.5rem;
+      background: var(--black-900);
+      position: relative;
+    }
+
+    #prices::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 37rem; height: 37rem;
+      background: rgba(251,191,36,0.03);
+      border-radius: 50%;
+      filter: blur(4rem);
+    }
+
+    .prices-header { text-align: center; margin-bottom: 3rem; position: relative; z-index: 1; }
+
+    .accordion {
+      max-width: 48rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .acc-item {
+      border: 1px solid rgba(251,191,36,0.15);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.5s;
+    }
+
+    .acc-item:hover { border-color: rgba(251,191,36,0.3); }
+
+    .acc-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(251,191,36,0.05);
+      border: none;
+      cursor: pointer;
+      min-height: 3.5rem;
+      transition: background 0.3s;
+    }
+
+    .acc-trigger:hover { background: rgba(251,191,36,0.1); }
+
+    .acc-trigger-left {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+
+    .acc-icon-wrap {
+      flex-shrink: 0;
+      width: 2.25rem; height: 2.25rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .acc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(253,230,138,0.9);
+      text-align: left;
+    }
+
+    @media(min-width:640px) { .acc-title { font-size: 1.125rem; } }
+
+    .acc-chevron {
+      flex-shrink: 0;
+      color: var(--gold-400);
+      transition: transform 0.3s;
+    }
+
+    .acc-item.open .acc-chevron { transform: rotate(180deg); }
+
+    .acc-body {
+      display: none;
+      border-top: 1px solid rgba(251,191,36,0.1);
+    }
+
+    .acc-item.open .acc-body { display: block; }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.875rem 1.25rem;
+      border-bottom: 1px solid rgba(251,191,36,0.05);
+      transition: background 0.3s;
+    }
+
+    .price-row:last-child { border-bottom: none; }
+    .price-row:hover { background: rgba(251,191,36,0.05); }
+
+    .price-name { font-size: 0.8rem; color: rgba(253,230,138,0.7); flex: 1; }
+    @media(min-width:640px) { .price-name { font-size: 0.875rem; } }
+
+    .price-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .price-divider {
+      width: 2.5rem; height: 1px;
+      background: rgba(251,191,36,0.2);
+      display: none;
+    }
+
+    @media(min-width:640px) { .price-divider { display: block; } }
+
+    .price-value {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold-400);
+      font-weight: 600;
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+
+    @media(min-width:640px) { .price-value { font-size: 1rem; } }
+
+    .prices-note {
+      text-align: center;
+      color: rgba(253,230,138,0.4);
+      font-size: 0.8rem;
+      margin-top: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================================================
+       CONTACT
+    ========================================================= */
+    #contact {
+      padding: 5rem 1.5rem;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: -6rem; right: -6rem;
+      width: 24rem; height: 24rem;
+      background: rgba(251,191,36,0.05);
+      border-radius: 50%;
+      filter: blur(4rem);
+    }
+
+    .contact-header { text-align: center; margin-bottom: 3.5rem; position: relative; z-index: 1; }
+
+    .contact-grid {
+      max-width: 80rem;
+      margin: 0 auto;
+      display: grid;
+      gap: 2.5rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media(min-width:1024px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+
+    .contact-card {
+      padding: 1.25rem;
+      border-radius: 0.875rem;
+      border: 1px solid rgba(251,191,36,0.1);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .contact-card:hover { border-color: rgba(251,191,36,0.3); }
+
+    .contact-card-icon {
+      flex-shrink: 0;
+      width: 2.75rem; height: 2.75rem;
+      border-radius: 0.625rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(253,230,138,0.9);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-card p, .contact-card a {
+      font-size: 0.875rem;
+      color: rgba(253,230,138,0.6);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-card a:hover { color: var(--gold-400); }
+
+    .social-links { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+
+    .social-btn {
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 50%;
+      border: 1px solid rgba(251,191,36,0.2);
+      color: var(--gold-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .social-btn:hover { background: var(--gold-400); color: var(--black-900); }
+
+    .contact-image-wrap {
+      position: relative;
+      height: 20rem;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(251,191,36,0.2);
+    }
+
+    @media(min-width:640px) { .contact-image-wrap { height: 100%; min-height: 25rem; } }
+
+    .contact-image-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .contact-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 60%);
+    }
+
+    .contact-book-card {
+      position: absolute;
+      bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+      background: rgba(10,10,10,0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+
+    .contact-book-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: rgba(253,230,138,0.9);
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-book-card p { font-size: 0.8rem; color: rgba(253,230,138,0.6); margin-bottom: 1rem; }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+    footer {
+      background: var(--black-900);
+      border-top: 1px solid rgba(251,191,36,0.1);
+    }
+
+    .footer-inner {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    @media(min-width:1024px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+
+    .footer-brand { grid-column: 1/-1; }
+    @media(min-width:1024px) { .footer-brand { grid-column: auto; } }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo img {
+      width: 3rem; height: 3rem;
+      border-radius: 50%;
+      border: 2px solid rgba(251,191,36,0.4);
+      object-fit: cover;
+    }
+
+    .footer-logo span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .footer-desc { font-size: 0.8rem; color: rgba(253,230,138,0.5); line-height: 1.6; margin-bottom: 0.75rem; }
+
+    .footer-address {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: rgba(253,230,138,0.5);
+    }
+
+    .footer-col h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(253,230,138,0.9);
+      margin-bottom: 0.875rem;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .footer-col a {
+      font-size: 0.8rem;
+      color: rgba(253,230,138,0.5);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover { color: var(--gold-400); }
+
+    .footer-col li { font-size: 0.8rem; color: rgba(253,230,138,0.5); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(251,191,36,0.1);
+    }
+
+    .footer-bottom-inner {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    @media(min-width:640px) {
+      .footer-bottom-inner { flex-direction: row; justify-content: space-between; text-align: left; }
+    }
+
+    .footer-bottom p { font-size: 0.75rem; color: rgba(253,230,138,0.4); }
+
+    /* =========================================================
+       WHATSAPP CHAT
+    ========================================================= */
+    #wa-btn {
+      position: fixed;
+      bottom: 1rem; right: 0.75rem;
+      z-index: 50;
+      width: 3rem; height: 3rem;
+      border-radius: 50%;
+      background: #25D366;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      transition: transform 0.3s, background 0.3s;
+      transform: scale(0);
+    }
+
+    @media(min-width:640px) {
+      #wa-btn { bottom: 1.5rem; right: 1.5rem; width: 3.5rem; height: 3.5rem; }
+    }
+
+    #wa-btn.visible { transform: scale(1); }
+    #wa-btn:hover { background: #1ea855; transform: scale(1.1); }
+
+    #wa-popup {
+      position: fixed;
+      bottom: 5rem; right: 0.75rem;
+      z-index: 50;
+      width: calc(100vw - 1.5rem);
+      max-width: 21rem;
+      background: #0a0a0a;
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      transform: scale(0.9) translateY(1rem);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: bottom right;
+    }
+
+    @media(min-width:640px) { #wa-popup { bottom: 6rem; right: 1.5rem; } }
+
+    #wa-popup.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
+
+    .wa-header {
+      padding: 0.875rem 1.125rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #d97706, #fbbf24);
+    }
+
+    .wa-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .wa-header-img-wrap {
+      position: relative;
+    }
+
+    .wa-header img {
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      object-fit: cover;
+    }
+
+    .wa-online {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 0.7rem; height: 0.7rem;
+      background: #22c55e;
+      border-radius: 50%;
+      border: 2px solid #f59e0b;
+    }
+
+    .wa-header-name { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 600; color: white; }
+    .wa-header-status { font-size: 0.7rem; color: rgba(255,255,255,0.7); }
+
+    .wa-close {
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0.25rem; border-radius: 0.25rem;
+      transition: color 0.2s;
+    }
+
+    .wa-close:hover { color: white; }
+
+    .wa-body {
+      padding: 1.125rem;
+      background: #0a0a0a;
+      min-height: 10rem;
+    }
+
+    .wa-message-wrap { display: flex; align-items: flex-start; gap: 0.625rem; }
+
+    .wa-avatar {
+      width: 1.75rem; height: 1.75rem;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .wa-bubble {
+      background: rgba(251,191,36,0.1);
+      border: 1px solid rgba(251,191,36,0.15);
+      border-radius: 0.875rem;
+      border-top-left-radius: 0.125rem;
+      padding: 0.625rem 0.875rem;
+    }
+
+    .wa-bubble p { font-size: 0.8rem; color: rgba(253,230,138,0.8); line-height: 1.5; }
+    .wa-bubble .wa-time { font-size: 0.65rem; color: rgba(253,230,138,0.4); margin-top: 0.35rem; }
+
+    .wa-footer {
+      padding: 0.625rem 0.875rem 0.875rem;
+      background: rgba(15,15,15,0.5);
+      border-top: 1px solid rgba(251,191,36,0.1);
+    }
+
+    .wa-start-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.625rem;
+      background: #25D366;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: background 0.3s;
+    }
+
+    .wa-start-btn:hover { background: #1ea855; }
+
+    /* Scroll bubble */
+    #wa-bubble {
+      position: fixed;
+      bottom: 5.5rem; right: 4.5rem;
+      z-index: 49;
+      max-width: 13rem;
+      background: #0a0a0a;
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 1rem;
+      border-bottom-right-radius: 0.125rem;
+      padding: 0.625rem 0.875rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.8) translateX(1rem);
+      transition: opacity 0.4s, transform 0.4s;
+      transform-origin: bottom right;
+    }
+
+    @media(min-width:640px) { #wa-bubble { bottom: 6.5rem; right: 5.5rem; } }
+
+    #wa-bubble.show { opacity: 1; pointer-events: auto; transform: scale(1) translateX(0); }
+
+    #wa-bubble p { font-size: 0.8rem; color: rgba(253,230,138,0.8); }
+
+    #wa-bubble-close {
+      position: absolute;
+      top: -0.5rem; right: -0.5rem;
+      width: 1.25rem; height: 1.25rem;
+      background: var(--gold-400);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--black-900);
+      font-size: 0.7rem;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    #wa-bubble-close:hover { background: var(--gold-300); }
+
+    /* =========================================================
+       ANIMATIONS & KEYFRAMES
+    ========================================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(1.5rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(0.6rem); }
+    }
+
+    /* Intersection Observer fade-in */
+    .reveal {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-3rem);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(3rem);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     NAVBAR
+================================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <!-- Logo -->
+    <a href="#home" class="nav-logo" onclick="scrollTo('home',event)">
+      <img src="uploads/upload_1.jpeg" alt="Salon by Anju" onerror="this.style.background='linear-gradient(135deg,#fde68a,#f59e0b)';this.src=''">
+      <span class="nav-logo-text gold-gradient-text">Salon by Anju</span>
+    </a>
+
+    <!-- Desktop Links -->
+    <ul class="nav-links">
+      <li><a href="#home" onclick="scrollTo('home',event)">Home</a></li>
+      <li><a href="#about" onclick="scrollTo('about',event)">About</a></li>
+      <li><a href="#services" onclick="scrollTo('services',event)">Services</a></li>
+      <li><a href="#prices" onclick="scrollTo('prices',event)">Prices</a></li>
+      <li><a href="#contact" onclick="scrollTo('contact',event)">Contact</a></li>
+      <li>
+        <a href="tel:0716997670" class="btn-book gold-gradient-bg">
+          <i data-lucide="phone" style="width:14px;height:14px"></i>
+          Book Now
+        </a>
+      </li>
+    </ul>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+      <i data-lucide="menu" id="menu-icon" style="width:26px;height:26px"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-overlay">
+  <div class="mobile-backdrop" onclick="closeMenu()"></div>
+  <div class="mobile-menu">
+    <a href="#home" onclick="scrollTo('home',event);closeMenu()">Home</a>
+    <a href="#about" onclick="scrollTo('about',event);closeMenu()">About</a>
+    <a href="#services" onclick="scrollTo('services',event);closeMenu()">Services</a>
+    <a href="#prices" onclick="scrollTo('prices',event);closeMenu()">Prices</a>
+    <a href="#contact" onclick="scrollTo('contact',event);closeMenu()">Contact</a>
+    <a href="tel:0716997670" class="btn-book-mobile gold-gradient-bg">
+      <i data-lucide="phone" style="width:18px;height:18px"></i>
+      Book Now
+    </a>
+  </div>
+</div>
+
+<!-- ================================================================
+     HERO
+================================================================ -->
+<section id="home">
+  <div class="hero-bg">
+    <img src="images/salon-interior.jpg" alt="Salon Interior" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a0a0a,#1a0a00)'">
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <img
+      src="uploads/upload_1.jpeg"
+      alt="Salon by Anju Logo"
+      class="hero-logo"
+      onerror="this.style.background='linear-gradient(135deg,#fde68a,#f59e0b)';this.alt='SA'"
+    >
+
+    <p class="hero-eyebrow font-lato">Welcome to</p>
+    <h1 class="hero-title font-playfair gold-gradient-text">Salon by Anju</h1>
+    <p class="hero-subtitle font-lato">Hair &bull; Beauty &bull; Bridal</p>
+
+    <div class="hero-meta">
+      <span class="hero-meta-item">
+        <i data-lucide="map-pin" style="width:14px;height:14px;color:var(--gold-400)"></i>
+        Millennium City, Athurugiriya
+      </span>
+      <div class="hero-meta-divider"></div>
+      <a href="tel:0716997670" class="hero-meta-item">
+        <i data-lucide="phone" style="width:14px;height:14px;color:var(--gold-400)"></i>
+        071 699 7670
+      </a>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#services" class="btn-primary gold-gradient-bg" onclick="scrollTo('services',event)">Explore Services</a>
+      <a href="#contact" class="btn-outline" onclick="scrollTo('contact',event)">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <i data-lucide="chevron-down" style="width:28px;height:28px"></i>
+  </div>
+</section>
+
+<!-- ================================================================
+     ABOUT
+================================================================ -->
+<section id="about">
+  <div class="about-grid">
+    <!-- Image -->
+    <div class="about-img-wrap reveal-left">
+      <div style="position:relative">
+        <img src="images/facial.jpg" alt="Beauty Treatment" class="about-img" onerror="this.style.background='linear-gradient(135deg,#1a0a00,#0a0a0a)'">
+        <div class="about-img-border"></div>
+        <div class="about-years-card">
+          <p class="font-playfair gold-gradient-text">10+</p>
+          <p>Years of Excellence</p>
+        </div>
+      </div>
+      <div class="about-corner-tl"></div>
+      <div class="about-corner-br"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="about-content reveal-right">
+      <p class="section-eyebrow">About Us</p>
+      <h2 class="section-title">
+        Where Beauty Meets <span class="gold-gradient-text">Elegance</span>
+      </h2>
+      <p class="section-text">
+        Salon by Anju is your premier destination for hair, beauty, and bridal services
+        in Millennium City, Athurugiriya. We believe every person deserves to look and feel
+        their absolute best.
+      </p>
+      <p class="section-text">
+        From precision haircuts and vibrant color treatments to luxurious facials and
+        stunning bridal packages, our team of skilled professionals is dedicated to
+        delivering exceptional results using only premium products.
+      </p>
+
+      <div class="features-list">
+        <div class="feature-card reveal" style="transition-delay:0.05s">
+          <div class="feature-icon gold-gradient-bg">
+            <i data-lucide="sparkles" style="width:18px;height:18px;color:#050505"></i>
+          </div>
+          <div>
+            <h3>Premium Products</h3>
+            <p>We use only L'Oréal and other prime brand products for all our treatments.</p>
+          </div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.15s">
+          <div class="feature-icon gold-gradient-bg">
+            <i data-lucide="heart" style="width:18px;height:18px;color:#050505"></i>
+          </div>
+          <div>
+            <h3>Personalized Care</h3>
+            <p>Every client receives individualized attention tailored to their unique beauty needs.</p>
+          </div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.25s">
+          <div class="feature-icon gold-gradient-bg">
+            <i data-lucide="award" style="width:18px;height:18px;color:#050505"></i>
+          </div>
+          <div>
+            <h3>Expert Stylists</h3>
+            <p>Our skilled professionals bring years of experience in hair, beauty, and bridal styling.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     STATS BANNER
+================================================================ -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal" style="transition-delay:0s">
+      <div class="stat-icon gold-gradient-bg" style="margin:0 auto 1rem">
+        <i data-lucide="users" style="width:28px;height:28px;color:#050505"></i>
+      </div>
+      <div class="stat-value gold-gradient-text">5,000+</div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.12s">
+      <div class="stat-icon gold-gradient-bg" style="margin:0 auto 1rem">
+        <i data-lucide="calendar" style="width:28px;height:28px;color:#050505"></i>
+      </div>
+      <div class="stat-value gold-gradient-text">10+</div>
+      <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.24s">
+      <div class="stat-icon gold-gradient-bg" style="margin:0 auto 1rem">
+        <i data-lucide="award" style="width:28px;height:28px;color:#050505"></i>
+      </div>
+      <div class="stat-value gold-gradient-text">50+</div>
+      <div class="stat-label">Bridal Packages</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:0.36s">
+      <div class="stat-icon gold-gradient-bg" style="margin:0 auto 1rem">
+        <i data-lucide="heart" style="width:28px;height:28px;color:#050505"></i>
+      </div>
+      <div class="stat-value gold-gradient-text">100%</div>
+      <div class="stat-label">Satisfaction Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SERVICES
+================================================================ -->
+<section id="services">
+  <div class="services-header reveal">
+    <p class="section-eyebrow">What We Offer</p>
+    <h2 class="section-title">Our <span class="gold-gradient-text">Services</span></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="services-grid">
+    <!-- Face Treatments -->
+    <div class="service-card reveal" style="transition-delay:0s">
+      <div class="service-img-wrap">
+        <img src="images/facial.jpg" alt="Face Treatments" onerror="this.style.background='#1a0a00'">
+        <div class="service-img-overlay"></div>
+        <div class="service-badge gold-gradient-bg">
+          <i data-lucide="sparkles" style="width:18px;height:18px;color:#050505"></i>
+        </div>
+      </div>
+      <div class="service-body">
+        <h3>Face Treatments</h3>
+        <p>Eyebrow shaping, threading, facials, clean-ups, and pimple treatments for radiant skin.</p>
+      </div>
+      <div class="service-glow"></div>
+    </div>
+
+    <!-- Hair Services -->
+    <div class="service-card reveal" style="transition-delay:0.08s">
+      <div class="service-img-wrap">
+        <img src="images/hair-color.jpg" alt="Hair Services" onerror="this.style.background='#1a0a00'">
+        <div class="service-img-overlay"></div>
+        <div class="service-badge gold-gradient-bg">
+          <i data-lucide="scissors" style="width:18px;height:18px;color:#050505"></i>
+        </div>
+      </div>
+      <div class="service-body">
+        <h3>Hair Services</h3>
+        <p>Precision haircuts, coloring, conditioning, oil massages, and professional styling.</p>
+      </div>
+      <div class="service-glow"></div>
+    </div>
+
+    <!-- Hand & Foot Care -->
+    <div class="service-card reveal" style="transition-delay:0.16s">
+      <div class="service-img-wrap">
+        <img src="images/nails.jpg" alt="Hand & Foot Care" onerror="this.style.background='#1a0a00'">
+        <div class="service-img-overlay"></div>
+        <div class="service-badge gold-gradient-bg">
+          <i data-lucide="hand" style="width:18px;height:18px;color:#050505"></i>
+        </div>
+      </div>
+      <div class="service-body">
+        <h3>Hand &amp; Foot Care</h3>
+        <p>Luxurious manicures, pedicures, and gel color changes for perfectly polished nails.</p>
+      </div>
+      <div class="service-glow"></div>
+    </div>
+
+    <!-- Waxing -->
+    <div class="service-card reveal" style="transition-delay:0.24s">
+      <div class="service-img-wrap">
+        <img src="images/salon-interior.jpg" alt="Waxing Services" onerror="this.style.background='#1a0a00'">
+        <div class="service-img-overlay"></div>
+        <div class="service-badge gold-gradient-bg">
+          <i data-lucide="flower-2" style="width:18px;height:18px;color:#050505"></i>
+        </div>
+      </div>
+      <div class="service-body">
+        <h3>Waxing Services</h3>
+        <p>Smooth, long-lasting hair removal for legs, arms, underarms, and full body.</p>
+      </div>
+      <div class="service-glow"></div>
+    </div>
+
+    <!-- Botox & Keratin -->
+    <div class="service-card reveal" style="transition-delay:0.32s">
+      <div class="service-img-wrap">
+        <img src="images/hair-color.jpg" alt="Botox & Keratin" onerror="this.style.background='#1a0a00'">
+        <div class="service-img-overlay"></div>
+        <div class="service-badge gold-gradient-bg">
+          <i data-lucide="palette" style="width:18px;height:18px;color:#050505"></i>
+        </div>
+      </div>
+      <div class="service-body">
+        <h3>Botox &amp; Keratin</h3>
+        <p>Premium treatments using prime brand products for silky, manageable hair.</p>
+      </div>
+      <div class="service-glow"></div>
+    </div>
+
+    <!-- Bridal Packages -->
+    <div class="service-card reveal" style="transition-delay:0.4s">
+      <div class="service-img-wrap">
+        <img src="images/bridal.jpg" alt="Bridal Packages" onerror="this.style.background='#1a0a00'">
+        <div class="service-img-overlay"></div>
+        <div class="service-badge gold-gradient-bg">
+          <i data-lucide="crown" style="width:18px;height:18px;color:#050505"></i>
+        </div>
+      </div>
+      <div class="service-body">
+        <h3>Bridal Packages</h3>
+        <p>Complete bridal transformations including makeup, hair, and saree draping.</p>
+      </div>
+      <div class="service-glow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     TESTIMONIALS
+================================================================ -->
+<section id="testimonials">
+  <div class="testimonial-deco tl">&ldquo;</div>
+  <div class="testimonial-deco br">&rdquo;</div>
+
+  <div class="testimonials-header reveal">
+    <p class="section-eyebrow">Client Love</p>
+    <h2 class="section-title">What Our <span class="gold-gradient-text">Clients Say</span></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="carousel">
+    <div class="carousel-viewport">
+      <div id="testimonial-slide" class="testimonial-slide"></div>
+    </div>
+
+    <button class="carousel-btn prev" id="prev-btn" onclick="prevTestimonial()" aria-label="Previous testimonial">
+      <i data-lucide="chevron-left" style="width:20px;height:20px"></i>
+    </button>
+    <button class="carousel-btn next" id="next-btn" onclick="nextTestimonial()" aria-label="Next testimonial">
+      <i data-lucide="chevron-right" style="width:20px;height:20px"></i>
+    </button>
+  </div>
+
+  <div class="carousel-dots" id="carousel-dots"></div>
+  <p style="text-align:center;color:rgba(253,230,138,0.3);font-size:0.75rem;margin-top:1rem;display:block" id="swipe-hint">Swipe to browse</p>
+</section>
+
+<!-- ================================================================
+     PRICES
+================================================================ -->
+<section id="prices">
+  <div class="prices-header reveal">
+    <p class="section-eyebrow">Transparent Pricing</p>
+    <h2 class="section-title">Our <span class="gold-gradient-text">Price List</span></h2>
+    <p style="color:rgba(253,230,138,0.5);font-size:0.875rem;max-width:28rem;margin:0.75rem auto 0">Tap a category to view prices. All prices in LKR.</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="accordion" id="accordion"></div>
+
+  <p class="prices-note">* Prices may vary based on hair length and complexity. Please contact us for exact quotes.</p>
+</section>
+
+<!-- ================================================================
+     CONTACT
+================================================================ -->
+<section id="contact">
+  <div class="contact-header reveal">
+    <p class="section-eyebrow">Get in Touch</p>
+    <h2 class="section-title">Contact <span class="gold-gradient-text">Us</span></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="contact-grid">
+    <!-- Info -->
+    <div class="contact-info reveal-left">
+      <div class="contact-card">
+        <div class="contact-card-icon gold-gradient-bg">
+          <i data-lucide="map-pin" style="width:20px;height:20px;color:#050505"></i>
+        </div>
+        <div>
+          <h3>Visit Us</h3>
+          <p>Millennium City, Athurugiriya, Sri Lanka</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-card-icon gold-gradient-bg">
+          <i data-lucide="phone" style="width:20px;height:20px;color:#050505"></i>
+        </div>
+        <div>
+          <h3>Call Us</h3>
+          <a href="tel:0716997670">071 699 7670</a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-card-icon gold-gradient-bg">
+          <i data-lucide="clock" style="width:20px;height:20px;color:#050505"></i>
+        </div>
+        <div>
+          <h3>Opening Hours</h3>
+          <p>Monday - Saturday: 9:00 AM - 7:00 PM</p>
+          <p>Sunday: By Appointment</p>
+        </div>
+      </div>
+
+      <div style="padding-top:0.5rem">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:rgba(253,230,138,0.9);margin-bottom:0.75rem">Follow Us</h3>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <i data-lucide="instagram" style="width:18px;height:18px"></i>
+          </a>
+          <a href="#" class="social-btn" aria-label="Facebook">
+            <i data-lucide="facebook" style="width:18px;height:18px"></i>
+          </a>
+          <a href="#" class="social-btn" aria-label="Message">
+            <i data-lucide="message-circle" style="width:18px;height:18px"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="contact-image-wrap reveal-right">
+      <img src="images/salon-interior.jpg" alt="Salon Interior" onerror="this.style.background='linear-gradient(135deg,#1a0a00,#0a0a0a)'">
+      <div class="contact-image-overlay"></div>
+      <div class="contact-book-card">
+        <h3>Book Your Appointment</h3>
+        <p>Walk-ins welcome, but appointments are recommended for the best experience.</p>
+        <a href="tel:0716997670" class="btn-primary gold-gradient-bg" style="width:auto;display:inline-flex;align-items:center;gap:0.4rem;padding:0.625rem 1.5rem;font-size:0.8rem">
+          <i data-lucide="phone" style="width:14px;height:14px"></i>
+          Call Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="uploads/upload_1.jpeg" alt="Salon by Anju" onerror="this.style.background='linear-gradient(135deg,#fde68a,#f59e0b)'">
+        <span class="gold-gradient-text font-playfair">Salon by Anju</span>
+      </div>
+      <p class="footer-desc">Your destination for hair, beauty, and bridal excellence in Athurugiriya.</p>
+      <div class="footer-address">
+        <i data-lucide="map-pin" style="width:14px;height:14px;color:var(--gold-400);flex-shrink:0"></i>
+        Millennium City, Athurugiriya
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home" onclick="scrollTo('home',event)">Home</a></li>
+        <li><a href="#about" onclick="scrollTo('about',event)">About</a></li>
+        <li><a href="#services" onclick="scrollTo('services',event)">Services</a></li>
+        <li><a href="#prices" onclick="scrollTo('prices',event)">Prices</a></li>
+        <li><a href="#contact" onclick="scrollTo('contact',event)">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li>Hair Styling</li>
+        <li>Facial Treatments</li>
+        <li>Bridal Packages</li>
+        <li>Waxing</li>
+        <li>Keratin &amp; Botox</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:0716997670" style="display:flex;align-items:center;gap:0.5rem">
+          <i data-lucide="phone" style="width:14px;height:14px;color:var(--gold-400)"></i>
+          071 699 7670
+        </a></li>
+        <li style="margin-top:0.5rem">Mon - Sat: 9AM - 7PM</li>
+        <li>Sunday: By Appointment</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <p>&copy; <span id="year"></span> Salon by Anju. All rights reserved.</p>
+      <p>Made with ♥ in Sri Lanka</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================
+     WHATSAPP CHAT
+================================================================ -->
+<!-- Scroll bubble -->
+<div id="wa-bubble">
+  <button id="wa-bubble-close" onclick="document.getElementById('wa-bubble').classList.remove('show')" aria-label="Dismiss">✕</button>
+  <p>Need help booking? Chat with us on WhatsApp! 💄</p>
+</div>
+
+<!-- Chat Popup -->
+<div id="wa-popup">
+  <div class="wa-header">
+    <div class="wa-header-info">
+      <div class="wa-header-img-wrap">
+        <img src="uploads/upload_1.jpeg" alt="Salon by Anju" onerror="this.style.background='linear-gradient(135deg,#fde68a,#f59e0b)'">
+        <div class="wa-online"></div>
+      </div>
+      <div>
+        <div class="wa-header-name font-playfair">Salon by Anju</div>
+        <div class="wa-header-status">Typically replies within minutes</div>
+      </div>
+    </div>
+    <button class="wa-close" onclick="closeWa()" aria-label="Close chat">
+      <i data-lucide="x" style="width:18px;height:18px"></i>
+    </button>
+  </div>
+  <div class="wa-body">
+    <div class="wa-message-wrap">
+      <img src="uploads/upload_1.jpeg" alt="" class="wa-avatar" onerror="this.style.background='linear-gradient(135deg,#fde68a,#f59e0b)'">
+      <div class="wa-bubble">
+        <p>Hello! 💄 Welcome to Salon by Anju. How can we help you today? Feel free to ask about our services or book an appointment!</p>
+        <p class="wa-time">Just now</p>
+      </div>
+    </div>
+  </div>
+  <div class="wa-footer">
+    <a href="https://wa.me/94716997670?text=Hi%20Salon%20by%20Anju!%20I%20would%20like%20to%20book%20an%20appointment.%20Can%20you%20help%20me%3F"
+       target="_blank" rel="noopener noreferrer" class="wa-start-btn">
+      <i data-lucide="message-circle" style="width:16px;height:16px"></i>
+      Start Chat on WhatsApp
+    </a>
+  </div>
+</div>
+
+<!-- WhatsApp FAB -->
+<button id="wa-btn" onclick="toggleWa()" aria-label="Open WhatsApp chat">
+  <i data-lucide="message-circle" id="wa-icon" style="width:22px;height:22px"></i>
+</button>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+  // ---- Init Lucide icons ----
+  lucide.createIcons();
+
+  // ---- Utility: smooth scroll ----
+  function scrollTo(id, e) {
+    if (e) e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ---- Navbar scroll ----
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // ---- Mobile menu ----
+  let menuOpen = false;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    document.getElementById('mobile-overlay').classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const icon = document.getElementById('menu-icon');
+    icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    document.getElementById('mobile-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('menu-icon').setAttribute('data-lucide', 'menu');
+    lucide.createIcons();
+  }
+
+  // ---- Testimonials ----
+  const testimonials = [
+    { name: 'Shanika Perera', role: 'Bridal Client', text: 'Anju did an absolutely stunning job on my bridal makeup and hair. I felt like a princess on my special day. The team was so professional and made sure every detail was perfect. Highly recommend their bridal package!', rating: 5 },
+    { name: 'Dilini Fernando', role: 'Regular Client', text: 'I have been coming to Salon by Anju for over 3 years now. The keratin treatment transformed my frizzy hair completely. They use only the best products and the results always exceed my expectations.', rating: 5 },
+    { name: 'Nethmi Silva', role: 'First-time Visitor', text: 'Visited for a facial and waxing. The salon is beautiful, clean, and has such a relaxing atmosphere. Anju was so friendly and professional. My skin has never looked better! Will definitely be a regular.', rating: 5 },
+    { name: 'Tharushi Jayawardena', role: 'Bridal Client', text: 'The bridal package was worth every rupee. From the trial session to the wedding day, everything was handled with such care. My saree draping was flawless and the makeup lasted the entire day. Thank you Anju!', rating: 5 },
+    { name: 'Kavindi Rathnayake', role: 'Regular Client', text: "Best salon in Athurugiriya! I get my hair colored here regularly with L'Oréal products and the color always looks vibrant and natural. The staff is talented and the prices are very reasonable for the quality.", rating: 5 },
+  ];
+
+  let currentSlide = 0;
+  let autoplayTimer;
+
+  function renderSlide() {
+    const t = testimonials[currentSlide];
+    const stars = '★'.repeat(t.rating);
+    document.getElementById('testimonial-slide').innerHTML = `
+      <div class="stars">${stars.split('').map(() => '<span class="star">★</span>').join('')}</div>
+      <p class="testimonial-text">&ldquo;${t.text}&rdquo;</p>
+      <div class="testimonial-name font-playfair">${t.name}</div>
+      <div class="testimonial-role">${t.role}</div>
+    `;
+    // Update dots
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  function prevTestimonial() {
+    currentSlide = (currentSlide - 1 + testimonials.length) % testimonials.length;
+    renderSlide();
+    resetAutoplay();
+  }
+
+  function nextTestimonial() {
+    currentSlide = (currentSlide + 1) % testimonials.length;
+    renderSlide();
+    resetAutoplay();
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(nextTestimonial, 6000);
+  }
+
+  // Render dots
+  const dotsContainer = document.getElementById('carousel-dots');
+  testimonials.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'dot' + (i === 0 ? ' active' : '');
+    btn.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+    btn.onclick = () => { currentSlide = i; renderSlide(); resetAutoplay(); };
+    dotsContainer.appendChild(btn);
+  });
+
+  renderSlide();
+  autoplayTimer = setInterval(nextTestimonial, 6000);
+
+  // Touch swipe for testimonials
+  let touchStartX = 0, touchEndX = 0;
+  const carousel = document.querySelector('.carousel');
+  carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  carousel.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextTestimonial(); else prevTestimonial();
+    }
+  }, { passive: true });
+
+  // ---- Price Accordion ----
+  const priceCategories = [
+    { icon: 'sparkles', title: 'Face Treatments', items: [
+      { name: 'Eyebrow Shaping', price: '200' },
+      { name: 'Upper Lip Threading', price: '100' },
+      { name: 'Full Face Threading', price: '1,000' },
+      { name: 'Clean-Up (with Pack)', price: '1,500' },
+      { name: 'Facial', price: 'From 2,500' },
+      { name: 'Pimple Treatment', price: '2,800 up' },
+      { name: 'Gold Facial', price: '3,500 up' },
+    ]},
+    { icon: 'scissors', title: 'Hair Services', items: [
+      { name: 'Haircut & Setting - Short Hair', price: '2,000' },
+      { name: 'Haircut & Setting - Medium Length', price: '2,500' },
+      { name: 'Haircut & Setting - Long Layers', price: '3,000' },
+      { name: 'Root Colour', price: '800' },
+      { name: 'Root Colour with Colors', price: '2,300' },
+      { name: 'Deep Conditioning Treatment', price: '2,500' },
+      { name: 'Oil Massage', price: '1,000' },
+      { name: "Fashion Hair Colour (L'Oréal)", price: 'From 8,000' },
+      { name: 'Makeup', price: '2,500 - 3,000' },
+      { name: 'Early Dressing', price: '3,000' },
+      { name: 'Hair & Makeup', price: '2,000' },
+      { name: 'Saree Draping', price: '500' },
+    ]},
+    { icon: 'hand', title: 'Hand & Foot Care', items: [
+      { name: 'Pedicure (with Pack)', price: '2,500' },
+      { name: 'Manicure (with Pack)', price: '1,500' },
+      { name: 'Gel Colour Change', price: '1,300' },
+    ]},
+    { icon: 'flower-2', title: 'Waxing Services', items: [
+      { name: 'Full Legs', price: '2,500' },
+      { name: 'Full Arms', price: '2,000' },
+      { name: 'Underarms', price: '1,000' },
+      { name: 'Full Body Wax', price: '5,000' },
+    ]},
+    { icon: 'palette', title: 'Botox Treatment (Prime Brand)', items: [
+      { name: 'Shoulder Length', price: '10,000' },
+      { name: 'Medium Length', price: '15,000' },
+      { name: 'Long Hair', price: '20,000' },
+    ]},
+    { icon: 'palette', title: 'Keratin Treatment (Prime Brand)', items: [
+      { name: 'Shoulder Length', price: '15,000' },
+      { name: 'Medium Length', price: '20,000' },
+      { name: 'Long Hair', price: '25,000 up' },
+    ]},
+    { icon: 'crown', title: 'Bridal Packages', items: [
+      { name: 'Complete Bridal Package', price: '100,000 up' },
+    ]},
+  ];
+
+  const accordion = document.getElementById('accordion');
+  priceCategories.forEach((cat, i) => {
+    const item = document.createElement('div');
+    item.className = 'acc-item reveal';
+    item.style.transitionDelay = `${i * 0.06}s`;
+    item.innerHTML = `
+      <button class="acc-trigger" onclick="toggleAccordion(this)" aria-expanded="false">
+        <div class="acc-trigger-left">
+          <div class="acc-icon-wrap gold-gradient-bg">
+            <i data-lucide="${cat.icon}" style="width:18px;height:18px;color:#050505"></i>
+          </div>
+          <span class="acc-title">${cat.title}</span>
+        </div>
+        <i data-lucide="chevron-down" class="acc-chevron" style="width:20px;height:20px"></i>
+      </button>
+      <div class="acc-body">
+        ${cat.items.map(item => `
+          <div class="price-row">
+            <span class="price-name">${item.name}</span>
+            <div class="price-right">
+              <div class="price-divider"></div>
+              <span class="price-value">Rs. ${item.price}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    accordion.appendChild(item);
+  });
+
+  lucide.createIcons();
+
+  function toggleAccordion(btn) {
+    const item = btn.closest('.acc-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.acc-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ---- Footer year ----
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---- WhatsApp ----
+  let waOpen = false;
+
+  // Show button after 2s
+  setTimeout(() => {
+    document.getElementById('wa-btn').classList.add('visible');
+  }, 2000);
+
+  function toggleWa() {
+    waOpen = !waOpen;
+    document.getElementById('wa-popup').classList.toggle('open', waOpen);
+    document.getElementById('wa-bubble').classList.remove('show');
+    const icon = document.getElementById('wa-icon');
+    icon.setAttribute('data-lucide', waOpen ? 'x' : 'message-circle');
+    lucide.createIcons();
+  }
+
+  function closeWa() {
+    waOpen = false;
+    document.getElementById('wa-popup').classList.remove('open');
+    const icon = document.getElementById('wa-icon');
+    icon.setAttribute('data-lucide', 'message-circle');
+    lucide.createIcons();
+  }
+
+  // Scroll bubble
+  let bubbleShown = false;
+  window.addEventListener('scroll', () => {
+    const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    if (scrollPercent > 0.7 && !bubbleShown) {
+      bubbleShown = true;
+      const bubble = document.getElementById('wa-bubble');
+      bubble.classList.add('show');
+      setTimeout(() => bubble.classList.remove('show'), 8000);
+    }
+  }, { passive: true });
+
+  // ---- Intersection Observer for reveal animations ----
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
