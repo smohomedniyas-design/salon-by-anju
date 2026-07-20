@@ -17,30 +17,32 @@ const defaultGalleryImages: GalleryItem[] = [
   { id: 5, title: 'Our Salon', category: 'Studio', image: '/images/salon-interior.jpg' },
 ];
 
+// Distribute images across N columns for masonry
+function buildColumns(images: GalleryItem[], cols: number): GalleryItem[][] {
+  const columns: GalleryItem[][] = Array.from({ length: cols }, () => []);
+  images.forEach((img, i) => columns[i % cols].push(img));
+  return columns;
+}
+
 export default function Gallery() {
   const [galleryImages, setGalleryImages] = useState<GalleryItem[]>(defaultGalleryImages);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(12);
 
   useEffect(() => {
-    setVisibleCount(6);
+    setVisibleCount(12);
   }, [selectedCategory]);
 
   useEffect(() => {
     fetch('/api/gallery')
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setGalleryImages(data);
-        }
+        if (Array.isArray(data) && data.length > 0) setGalleryImages(data);
       })
       .catch(() => {});
   }, []);
 
-  const categories = ['All', ...Array.from(new Set(galleryImages.map((image) => image.category)))];
-
-  // Shuffle for "All" view so images are mixed
   const shuffled = useRef<GalleryItem[]>([]);
   useEffect(() => {
     const arr = [...galleryImages];
@@ -51,6 +53,8 @@ export default function Gallery() {
     shuffled.current = arr;
   }, [galleryImages]);
 
+  const categories = ['All', ...Array.from(new Set(galleryImages.map((img) => img.category)))];
+
   const filteredImages =
     selectedCategory === 'All'
       ? shuffled.current.length ? shuffled.current : galleryImages
@@ -59,27 +63,47 @@ export default function Gallery() {
   const visibleImages = filteredImages.slice(0, visibleCount);
   const hasMore = visibleCount < filteredImages.length;
 
-  // Split into two rows for the sliding marquee
-  const row1 = filteredImages.filter((_, i) => i % 2 === 0);
-  const row2 = filteredImages.filter((_, i) => i % 2 === 1);
+  // Masonry: 3 cols on lg, 2 on sm
+  const masonryCols3 = buildColumns(visibleImages, 3);
+  const masonryCols2 = buildColumns(visibleImages, 2);
 
   const handleNext = () => {
     if (selectedImage === null) return;
-    const currentIndex = filteredImages.findIndex((img) => img.id === selectedImage);
-    if (currentIndex < filteredImages.length - 1) {
-      setSelectedImage(filteredImages[currentIndex + 1].id);
-    }
+    const idx = filteredImages.findIndex((img) => img.id === selectedImage);
+    if (idx < filteredImages.length - 1) setSelectedImage(filteredImages[idx + 1].id);
   };
 
   const handlePrev = () => {
     if (selectedImage === null) return;
-    const currentIndex = filteredImages.findIndex((img) => img.id === selectedImage);
-    if (currentIndex > 0) {
-      setSelectedImage(filteredImages[currentIndex - 1].id);
-    }
+    const idx = filteredImages.findIndex((img) => img.id === selectedImage);
+    if (idx > 0) setSelectedImage(filteredImages[idx - 1].id);
   };
 
-  const selectedImageData = galleryImages.find((img) => img.id === selectedImage);
+  const selectedImageData = filteredImages.find((img) => img.id === selectedImage);
+
+  const MasonryImage = ({ image, index }: { image: GalleryItem; index: number }) => (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.04 }}
+      onClick={() => setSelectedImage(image.id)}
+      className="group relative overflow-hidden rounded-xl cursor-pointer mb-4"
+    >
+      <img
+        src={image.image}
+        alt={image.title}
+        className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        style={{ display: 'block' }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+        <div>
+          <p className="text-gold-400 text-xs font-semibold mb-0.5">{image.category}</p>
+          <h3 className="text-gold-200 text-sm font-semibold leading-tight">{image.title}</h3>
+        </div>
+      </div>
+    </motion.div>
+  );
 
   return (
     <section id="gallery" className="py-16 sm:py-24 bg-black-800 relative">
@@ -100,6 +124,7 @@ export default function Gallery() {
           <div className="section-divider max-w-xs mx-auto mt-4 sm:mt-6" />
         </motion.div>
 
+        {/* Category filters */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -123,89 +148,79 @@ export default function Gallery() {
         </motion.div>
 
         {selectedCategory === 'All' ? (
-          /* Auto-sliding two-row marquee for "All" */
-          <div className="space-y-4 overflow-hidden">
-            <style>{`
-              @keyframes slide-right { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-              @keyframes slide-left  { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-              .marquee-right { animation: slide-right 40s linear infinite; }
-              .marquee-left  { animation: slide-left  40s linear infinite; }
-              .marquee-right:hover, .marquee-left:hover { animation-play-state: paused; }
-            `}</style>
-            {[row1, row2].map((row, rowIdx) => {
-              const doubled = [...row, ...row];
-              return (
-                <div key={rowIdx} className="flex gap-4" style={{ width: 'max-content' }}>
-                  <div className={`flex gap-4 ${rowIdx === 0 ? 'marquee-right' : 'marquee-left'}`} style={{ width: 'max-content' }}>
-                    {doubled.map((image, i) => (
-                      <div
-                        key={`${image.id}-${i}`}
-                        onClick={() => setSelectedImage(image.id)}
-                        className="group relative overflow-hidden rounded-xl cursor-pointer flex-shrink-0 w-56 h-56 sm:w-64 sm:h-64"
-                      >
-                        <img
-                          src={image.image}
-                          alt={image.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black-900 via-black-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                          <div>
-                            <p className="text-gold-400 text-xs font-semibold mb-1">{image.category}</p>
-                            <h3 className="text-gold-200 text-sm font-semibold">{image.title}</h3>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          /* Normal grid for specific categories */
+          /* Masonry grid for All */
           <>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              <AnimatePresence mode="popLayout">
-                {visibleImages.map((image, index) => (
-                  <motion.div
-                    key={image.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    onClick={() => setSelectedImage(image.id)}
-                    className="group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer aspect-square"
-                  >
-                    <img
-                      src={image.image}
-                      alt={image.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black-900 via-black-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 sm:p-6">
-                      <div>
-                        <p className="text-gold-400 text-xs sm:text-sm font-semibold mb-1">{image.category}</p>
-                        <h3 className="text-gold-200 text-sm sm:text-base font-semibold">{image.title}</h3>
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 border border-gold-400/0 group-hover:border-gold-400/30 rounded-xl sm:rounded-2xl transition-colors duration-300" />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+            {/* 3-col masonry — lg screens */}
+            <div className="hidden lg:flex gap-4">
+              {masonryCols3.map((col, ci) => (
+                <div key={ci} className="flex-1">
+                  {col.map((image, ii) => (
+                    <MasonryImage key={image.id} image={image} index={ci + ii * 3} />
+                  ))}
+                </div>
+              ))}
             </div>
-            {hasMore && (
-              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-10">
-                <button
-                  onClick={() => setVisibleCount((c) => c + 6)}
-                  className="px-8 py-3 border border-gold-400/40 text-gold-300 font-semibold rounded-full hover:bg-gold-400/10 hover:border-gold-400 transition-all duration-300 text-sm uppercase tracking-wider"
-                >
-                  Load More
-                </button>
-              </motion.div>
-            )}
+            {/* 2-col masonry — sm/md screens */}
+            <div className="flex lg:hidden gap-3">
+              {masonryCols2.map((col, ci) => (
+                <div key={ci} className="flex-1">
+                  {col.map((image, ii) => (
+                    <MasonryImage key={image.id} image={image} index={ci + ii * 2} />
+                  ))}
+                </div>
+              ))}
+            </div>
           </>
+        ) : (
+          /* Regular grid for specific categories */
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <AnimatePresence mode="popLayout">
+              {visibleImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  onClick={() => setSelectedImage(image.id)}
+                  className="group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer aspect-square"
+                >
+                  <img
+                    src={image.image}
+                    alt={image.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black-900 via-black-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 sm:p-6">
+                    <div>
+                      <p className="text-gold-400 text-xs sm:text-sm font-semibold mb-1">{image.category}</p>
+                      <h3 className="text-gold-200 text-sm sm:text-base font-semibold">{image.title}</h3>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 border border-gold-400/0 group-hover:border-gold-400/30 rounded-xl sm:rounded-2xl transition-colors duration-300" />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
         )}
 
+        {hasMore && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mt-10"
+          >
+            <button
+              onClick={() => setVisibleCount((c) => c + 9)}
+              className="px-8 py-3 border border-gold-400/40 text-gold-300 font-semibold rounded-full hover:bg-gold-400/10 hover:border-gold-400 transition-all duration-300 text-sm uppercase tracking-wider"
+            >
+              Load More
+            </button>
+          </motion.div>
+        )}
+
+        {/* Lightbox */}
         <AnimatePresence>
           {selectedImage && selectedImageData && (
             <motion.div
@@ -229,21 +244,16 @@ export default function Gallery() {
                   alt={selectedImageData.title}
                   className="w-full h-full object-cover rounded-2xl"
                 />
-
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black-900 to-transparent rounded-b-2xl">
                   <p className="text-gold-400 text-sm font-semibold mb-1">{selectedImageData.category}</p>
-                  <h3 className="text-gold-200 text-xl sm:text-2xl font-semibold">
-                    {selectedImageData.title}
-                  </h3>
+                  <h3 className="text-gold-200 text-xl sm:text-2xl font-semibold">{selectedImageData.title}</h3>
                 </div>
-
                 <button
                   onClick={() => setSelectedImage(null)}
                   className="absolute top-4 right-4 p-2 bg-gold-400/10 hover:bg-gold-400/20 rounded-full transition-colors duration-300"
                 >
                   <X size={24} className="text-gold-400" />
                 </button>
-
                 {filteredImages.length > 1 && (
                   <>
                     <button
@@ -255,17 +265,13 @@ export default function Gallery() {
                     </button>
                     <button
                       onClick={handleNext}
-                      disabled={
-                        filteredImages.findIndex((img) => img.id === selectedImage) ===
-                        filteredImages.length - 1
-                      }
+                      disabled={filteredImages.findIndex((img) => img.id === selectedImage) === filteredImages.length - 1}
                       className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-gold-400/10 hover:bg-gold-400/20 rounded-full transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronRight size={24} className="text-gold-400" />
                     </button>
                   </>
                 )}
-
                 <div className="absolute top-4 left-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-gold-400/10 rounded-full backdrop-blur-sm">
                   <p className="text-gold-400 text-xs sm:text-sm font-semibold">
                     {filteredImages.findIndex((img) => img.id === selectedImage) + 1} / {filteredImages.length}
