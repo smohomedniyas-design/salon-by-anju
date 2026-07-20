@@ -34,21 +34,7 @@ const imageMap: Record<string, string> = {
   'Bridal Packages': '/images/bridal.jpg',
 };
 
-const cloudinaryBase = 'https://res.cloudinary.com/pvr1nexp/image/upload/salon-assets';
-
-const serviceImageKeys: Record<string, string> = {
-  'Face Treatments': 'service-face-treatments',
-  'Hair Services': 'service-hair-services',
-  'Hand & Foot Care': 'service-hand-foot-care',
-  'Waxing Services': 'service-waxing-services',
-  'Botox Treatment (Prime Brand)': 'service-botox-keratin',
-  'Keratin Treatment (Prime Brand)': 'service-botox-keratin',
-  'Bridal Packages': 'service-bridal-packages',
-};
-
 function getServiceImage(category: string): string {
-  const key = serviceImageKeys[category];
-  if (key) return `${cloudinaryBase}/${key}.jpg`;
   return imageMap[category] || '/images/salon-interior.jpg';
 }
 

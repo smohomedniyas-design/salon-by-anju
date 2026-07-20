@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -26,6 +26,7 @@ function buildColumns(images: GalleryItem[], cols: number): GalleryItem[][] {
 
 export default function Gallery() {
   const [galleryImages, setGalleryImages] = useState<GalleryItem[]>(defaultGalleryImages);
+  const [shuffledImages, setShuffledImages] = useState<GalleryItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [visibleCount, setVisibleCount] = useState(12);
@@ -43,21 +44,20 @@ export default function Gallery() {
       .catch(() => {});
   }, []);
 
-  const shuffled = useRef<GalleryItem[]>([]);
   useEffect(() => {
     const arr = [...galleryImages];
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    shuffled.current = arr;
+    setShuffledImages(arr);
   }, [galleryImages]);
 
   const categories = ['All', ...Array.from(new Set(galleryImages.map((img) => img.category)))];
 
   const filteredImages =
     selectedCategory === 'All'
-      ? shuffled.current.length ? shuffled.current : galleryImages
+      ? (shuffledImages.length ? shuffledImages : galleryImages)
       : galleryImages.filter((img) => img.category === selectedCategory);
 
   const visibleImages = filteredImages.slice(0, visibleCount);
