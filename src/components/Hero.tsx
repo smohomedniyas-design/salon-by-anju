@@ -7,7 +7,7 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575068/salon-assets/hero-bg.jpg"
+          src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575945/salon-assets/hero-bg.jpg"
           alt="Salon Interior"
           className="w-full h-full object-cover"
         />

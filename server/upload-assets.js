@@ -14,9 +14,9 @@ cloudinary.config({
 const imagesDir = path.join(__dirname, '..', 'images');
 
 const assets = [
-  { file: 'WhatsApp Image 2026-07-14 at 21.02.29.jpeg', public_id: 'salon-assets/hero-bg' },
+  { file: 'WhatsApp Image 2026-07-14 at 21.01.00 (1) salona.jpeg', public_id: 'salon-assets/hero-bg' },
   { file: 'WhatsApp Image 2026-07-14 at 21.01.03.jpeg', public_id: 'salon-assets/about-image' },
-  { file: 'WhatsApp Image 2026-07-14 at 21.02.31.jpeg', public_id: 'salon-assets/contact-image' },
+  { file: 'WhatsApp Image 2026-07-14 at 21.01.01 (1) anju.jpeg', public_id: 'salon-assets/contact-image' },
 ];
 
 const urls = {};

@@ -118,7 +118,7 @@ export default function Contact() {
           >
             <div className="relative h-[320px] sm:h-full sm:min-h-[400px] rounded-xl sm:rounded-2xl overflow-hidden border border-gold-400/20">
               <img
-                src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575071/salon-assets/contact-image.jpg"
+                src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575948/salon-assets/contact-image.jpg"
                 alt="Salon Interior"
                 className="w-full h-full object-cover"
               />
