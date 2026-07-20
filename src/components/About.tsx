@@ -45,7 +45,7 @@ export default function About() {
               <div className="absolute inset-0 rounded-2xl border border-gold-400/20" />
               {/* Floating card - repositioned for mobile */}
               <div className="absolute -bottom-4 right-2 sm:-bottom-6 sm:-right-6 bg-black-800 border border-gold-400/30 rounded-xl p-4 sm:p-6 shadow-xl">
-                <p className="font-playfair text-2xl sm:text-3xl font-bold gold-gradient-text">10+</p>
+                <p className="font-playfair text-2xl sm:text-3xl font-bold gold-gradient-text">7+</p>
                 <p className="text-gold-200/70 text-xs sm:text-sm mt-1">Years of Excellence</p>
               </div>
             </div>
