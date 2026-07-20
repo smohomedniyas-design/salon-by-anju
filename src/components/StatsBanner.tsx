@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Users, Calendar, Award, Heart } from 'lucide-react';
 
 const stats = [
-  { icon: Users, value: '5,000+', label: 'Happy Clients' },
-  { icon: Calendar, value: '10+', label: 'Years of Experience' },
-  { icon: Award, value: '50+', label: 'Bridal Packages' },
+  { icon: Users, value: '900+', label: 'Happy Clients' },
+  { icon: Calendar, value: '7+', label: 'Years of Experience' },
+  { icon: Award, value: '30+', label: 'Bridal Packages' },
   { icon: Heart, value: '100%', label: 'Satisfaction Rate' },
 ];
 
