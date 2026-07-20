@@ -77,6 +77,7 @@ export default function AdminDashboard() {
     category: 'Bridal',
     image: '',
   });
+  const [galleryFilter, setGalleryFilter] = useState('All');
   const [uploadError, setUploadError] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -884,7 +885,7 @@ export default function AdminDashboard() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h2 className="text-xl font-bold text-gold-200">Manage Gallery</h2>
-                <p className="text-gold-100/50 mt-1">Easily upload and organize your gallery images.</p>
+                <p className="text-gold-100/50 mt-1">Filter by category, upload and edit images.</p>
               </div>
               <button
                 onClick={handleSaveGallery}
@@ -893,6 +894,23 @@ export default function AdminDashboard() {
                 <Save size={16} />
                 Save Gallery
               </button>
+            </div>
+
+            {/* Category filter tabs */}
+            <div className="flex flex-wrap gap-2">
+              {['All', 'Bridal', 'Hair', 'Nails', 'Facial', 'Waxing', 'Studio'].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setGalleryFilter(cat)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                    galleryFilter === cat
+                      ? 'gold-gradient-bg text-black-900'
+                      : 'border border-gold-400/30 text-gold-200 hover:border-gold-400/60'
+                  }`}
+                >
+                  {cat} {cat !== 'All' && `(${galleryItems.filter(i => i.category === cat).length})`}
+                </button>
+              ))}
             </div>
 
             <div className="grid gap-6">
@@ -942,7 +960,7 @@ export default function AdminDashboard() {
               </div>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {galleryItems.map((item) => (
+                {galleryItems.filter(item => galleryFilter === 'All' || item.category === galleryFilter).map((item) => (
                   <div key={item.id} className="bg-black-800 border border-gold-400/10 rounded-2xl overflow-hidden flex flex-col">
                     <div className="h-48 bg-black-900 relative">
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
