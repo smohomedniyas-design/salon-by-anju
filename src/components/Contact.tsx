@@ -126,7 +126,7 @@ export default function Contact() {
               
               {/* Overlay Card */}
               <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-                <div className="bg-black-800/90 backdrop-blur-sm border border-gold-400/20 rounded-lg sm:rounded-xl p-4 sm:p-6">
+                <div className="bg-black-800/70 backdrop-blur-sm border border-gold-400/20 rounded-lg sm:rounded-xl p-4 sm:p-6">
                   <h3 className="font-playfair text-base sm:text-xl font-semibold text-gold-200 mb-1.5 sm:mb-2">
                     Book Your Appointment
                   </h3>
