@@ -23,16 +23,14 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/gallery')
+    fetch('/api/gallery')
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
           setGalleryImages(data);
         }
       })
-      .catch(() => {
-        // keep fallback content
-      });
+      .catch(() => {});
   }, []);
 
   const categories = ['All', ...Array.from(new Set(galleryImages.map((image) => image.category)))];
