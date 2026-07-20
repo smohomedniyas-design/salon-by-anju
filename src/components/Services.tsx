@@ -37,10 +37,10 @@ const imageMap: Record<string, string> = {
 const descriptionMap: Record<string, string> = {
   'Face Treatments': 'Eyebrow shaping, threading, facials, clean-ups, and pimple treatments for radiant skin.',
   'Hair Services': 'Precision haircuts, coloring, conditioning, oil massages, and professional styling.',
-  'Hand & Foot Care': 'Luxurious manicures, pedicures, and gel color changes for perfectly polished nails.',
-  'Waxing Services': 'Smooth, long-lasting hair removal for legs, arms, underarms, and full body.',
+  'Hand & Foot Care': 'Manicures, pedicures, gel & acrylic nails for perfectly polished hands and feet.',
+  'Waxing Services': 'Smooth hair removal for legs, arms, underarms, full body & Brazilian waxing.',
   'Botox Treatment (Prime Brand)': 'Premium treatments using prime brand products for silky, manageable hair.',
-  'Keratin Treatment (Prime Brand)': 'Premium smoothing treatments for healthier hair.',
+  'Keratin Treatment (Prime Brand)': 'Premium smoothing treatments for healthier, frizz-free hair.',
   'Bridal Packages': 'Complete bridal transformations including makeup, hair, and saree draping.',
 };
 
@@ -93,16 +93,14 @@ export default function Services() {
   const [categories, setCategories] = useState<ServiceCategory[]>(fallbackServices);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/services')
+    fetch('/api/services')
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
           setCategories(data);
         }
       })
-      .catch(() => {
-        // fallback data is already loaded
-      });
+      .catch(() => {});
   }, []);
 
   return (

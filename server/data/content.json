@@ -12,122 +12,96 @@
   },
   "services": [
     {
+      "id": 0,
+      "category": "Special Promotions",
+      "items": [
+        { "id": "sp1", "name": "2 Pedicures + 2 Manicures with Gel Nail Color FREE", "price": "3,800" },
+        { "id": "sp2", "name": "Hair Colors", "price": "10% OFF" },
+        { "id": "sp3", "name": "Hair Straightening", "price": "10% OFF" },
+        { "id": "sp4", "name": "Facial - FREE Full Face Threading or Eyebrow Threading", "price": "Promo" }
+      ]
+    },
+    {
       "id": 1,
       "category": "Face Treatments",
       "items": [
-        {
-          "id": "ft1",
-          "name": "Facial - Full Face Trending or Eyebrow Trending",
-          "price": "FREE"
-        },
-        {
-          "id": "ft2",
-          "name": "Eyebrow Shaping",
-          "price": "200"
-        },
-        {
-          "id": "ft3",
-          "name": "Upper Lip Threading",
-          "price": "100"
-        }
+        { "id": "ft1", "name": "Eyebrow Shaping", "price": "200" },
+        { "id": "ft2", "name": "Upper Lip Threading", "price": "100" },
+        { "id": "ft3", "name": "Full Face Threading", "price": "1,000" },
+        { "id": "ft4", "name": "Clean-Up (with Pack)", "price": "1,500" },
+        { "id": "ft5", "name": "Facial", "price": "From 2,500" },
+        { "id": "ft6", "name": "Pimple Treatment", "price": "2,800 up" },
+        { "id": "ft7", "name": "Gold Facial", "price": "3,500 up" }
       ]
     },
     {
       "id": 2,
       "category": "Hair Services",
       "items": [
-        {
-          "id": "hs1",
-          "name": "Hair Colors",
-          "price": "10% OFF"
-        },
-        {
-          "id": "hs2",
-          "name": "Hair Straightening",
-          "price": "10% OFF"
-        },
-        {
-          "id": "hs3",
-          "name": "Oil Massage (Head & Shoulders)",
-          "price": "1,500"
-        }
+        { "id": "hs1", "name": "Haircut & Setting - Short Hair", "price": "2,000" },
+        { "id": "hs2", "name": "Haircut & Setting - Medium Length", "price": "2,500" },
+        { "id": "hs3", "name": "Haircut & Setting - Long Layers", "price": "3,000" },
+        { "id": "hs4", "name": "Root Colour", "price": "800" },
+        { "id": "hs5", "name": "Root Colour with Colors", "price": "2,300" },
+        { "id": "hs6", "name": "Deep Conditioning Treatment", "price": "2,500" },
+        { "id": "hs7", "name": "Oil Massage", "price": "1,000" },
+        { "id": "hs8", "name": "Oil Massage - Head & Shoulders", "price": "1,500" },
+        { "id": "hs9", "name": "Fashion Hair Colour (L'Oréal)", "price": "From 8,000" },
+        { "id": "hs10", "name": "Makeup", "price": "2,500 - 3,000" },
+        { "id": "hs11", "name": "Early Dressing", "price": "3,000" },
+        { "id": "hs12", "name": "Hair & Makeup", "price": "2,000" },
+        { "id": "hs13", "name": "Saree Draping", "price": "500" }
       ]
     },
     {
       "id": 3,
       "category": "Hand & Foot Care",
       "items": [
-        {
-          "id": "hf1",
-          "name": "2 Pedicures Bundle",
-          "price": "3,800 (with FREE gel nail color)"
-        },
-        {
-          "id": "hf2",
-          "name": "Gel Nails",
-          "price": "4,500 (First Set 3,500)"
-        },
-        {
-          "id": "hf3",
-          "name": "Acrylic Nails",
-          "price": "4,000"
-        }
+        { "id": "hf1", "name": "Pedicure (with Pack)", "price": "2,500" },
+        { "id": "hf2", "name": "Manicure (with Pack)", "price": "1,500" },
+        { "id": "hf3", "name": "Gel Colour Change", "price": "1,300" },
+        { "id": "hf4", "name": "Gel Nails", "price": "4,500" },
+        { "id": "hf5", "name": "Gel Nails - First Set", "price": "3,500" },
+        { "id": "hf6", "name": "Acrylic Nails", "price": "4,000" }
       ]
     },
     {
       "id": 4,
       "category": "Waxing Services",
       "items": [
-        {
-          "id": "ws1",
-          "name": "Full Body Wax",
-          "price": "5,000"
-        },
-        {
-          "id": "ws2",
-          "name": "Brazilian Wax",
-          "price": "4,500"
-        }
+        { "id": "ws1", "name": "Full Legs", "price": "2,500" },
+        { "id": "ws2", "name": "Full Arms", "price": "2,000" },
+        { "id": "ws3", "name": "Underarms", "price": "1,000" },
+        { "id": "ws4", "name": "Full Body Wax", "price": "5,000" },
+        { "id": "ws5", "name": "Brazilian Wax", "price": "4,500" }
+      ]
+    },
+    {
+      "id": 5,
+      "category": "Botox Treatment (Prime Brand)",
+      "items": [
+        { "id": "bt1", "name": "Shoulder Length", "price": "10,000" },
+        { "id": "bt2", "name": "Medium Length", "price": "15,000" },
+        { "id": "bt3", "name": "Long Hair", "price": "20,000" }
+      ]
+    },
+    {
+      "id": 6,
+      "category": "Keratin Treatment (Prime Brand)",
+      "items": [
+        { "id": "kt1", "name": "Shoulder Length", "price": "15,000" },
+        { "id": "kt2", "name": "Medium Length", "price": "20,000" },
+        { "id": "kt3", "name": "Long Hair", "price": "25,000 up" }
+      ]
+    },
+    {
+      "id": 7,
+      "category": "Bridal Packages",
+      "items": [
+        { "id": "bp1", "name": "Complete Bridal Package", "price": "100,000 up" }
       ]
     }
   ],
-  "gallery": [
-    {
-      "id": 1,
-      "title": "Bridal Makeup",
-      "category": "Bridal",
-      "image": "/images/bridal.jpg"
-    },
-    {
-      "id": 2,
-      "title": "Professional Facial",
-      "category": "Facial",
-      "image": "/images/facial.jpg"
-    },
-    {
-      "id": 3,
-      "title": "Hair Coloring",
-      "category": "Hair",
-      "image": "/images/hair-color.jpg"
-    },
-    {
-      "id": 4,
-      "title": "Nail Art & Design",
-      "category": "Nails",
-      "image": "/images/nails.jpg"
-    },
-    {
-      "id": 1784534901825,
-      "title": "Automated Test Image",
-      "category": "Bridal",
-      "image": "/images/bridal.jpg"
-    },
-    {
-      "id": 1784545501401,
-      "title": "Bridal ",
-      "category": "Bridal",
-      "image": "/images/WhatsApp-Image-2026-07-14-at-21-01-16-1784545501387.jpeg"
-    }
-  ],
+  "gallery": [],
   "bookings": []
 }
