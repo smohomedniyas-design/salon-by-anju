@@ -33,7 +33,7 @@ export default function Booking() {
   const [selectedServicePrice, setSelectedServicePrice] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/services')
+    fetch('/api/services')
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -47,9 +47,7 @@ export default function Booking() {
           }
         }
       })
-      .catch(() => {
-        // keep fallback options when API cannot be reached
-      });
+      .catch(() => {});
   }, []);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -143,7 +141,7 @@ Thank you!`;
 
   const submitBookingToApi = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/bookings', {
+      const res = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
