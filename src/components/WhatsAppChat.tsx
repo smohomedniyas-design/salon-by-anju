@@ -53,7 +53,7 @@ export default function WhatsAppChat() {
                 <div className="flex items-center gap-2.5 sm:gap-3">
                   <div className="relative">
                     <img
-                      src="/uploads/upload_1.jpeg"
+                      src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575069/salon-assets/about-image.jpg"
                       alt="Salon by Anju"
                       className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white/30 object-cover"
                     />
@@ -77,7 +77,7 @@ export default function WhatsAppChat() {
               <div className="px-4 sm:px-5 py-4 sm:py-5 bg-black-800 min-h-[160px] sm:min-h-[180px]">
                 <div className="flex items-start gap-2.5 sm:gap-3">
                   <img
-                    src="/uploads/upload_1.jpeg"
+                    src="https://res.cloudinary.com/pvr1nexp/image/upload/v1784575069/salon-assets/about-image.jpg"
                     alt="Salon by Anju"
                     className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0 mt-0.5"
                   />

@@ -38,7 +38,14 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 text-gold-100/50 text-xs sm:text-sm">
               <MapPin size={14} className="text-gold-400 shrink-0" />
-              <span>Millennium City, Athurugiriya</span>
+              <a
+                href="https://maps.app.goo.gl/7yGgjBo9z8ZvaFaR6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gold-400 transition-colors"
+              >
+                Millennium City, Athurugiriya
+              </a>
             </div>
             <div className="flex gap-3 mt-4">
               <a href="https://www.instagram.com/salon_by_anju" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-gold-400/20 text-gold-400 hover:bg-gold-400 hover:text-black-900 transition-all duration-300" aria-label="Instagram">

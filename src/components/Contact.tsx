@@ -43,6 +43,14 @@ export default function Contact() {
                 <div className="min-w-0">
                   <h3 className="font-playfair text-base sm:text-lg font-semibold text-gold-200 mb-0.5 sm:mb-1">Visit Us</h3>
                   <p className="text-gold-100/60 text-sm">Millennium City, Athurugiriya, Sri Lanka</p>
+                  <a
+                    href="https://maps.app.goo.gl/7yGgjBo9z8ZvaFaR6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold-400 text-xs hover:text-gold-300 transition-colors mt-1 inline-block"
+                  >
+                    View on Google Maps →
+                  </a>
                 </div>
               </div>
             </div>
