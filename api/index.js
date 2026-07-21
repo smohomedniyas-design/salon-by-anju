@@ -31,6 +31,7 @@ const businessInfoSchema = new mongoose.Schema({
   name: String, phone: String, email: String, address: String,
   adminPassword: { type: String, default: 'admin123' },
   hours: { weekday: String, weekend: String },
+  assetUrls: { type: mongoose.Schema.Types.Mixed, default: {} },
 });
 
 const Service = mongoose.models.Service || mongoose.model('Service', serviceSchema);
@@ -152,17 +153,25 @@ export default async function handler(req, res) {
       return send(res, 200, { success: true });
     }
 
-    // Static asset upload → Cloudinary
+    // Static asset upload → Cloudinary + save URL to BusinessInfo
     if (url === '/upload-static' && method === 'POST') {
       const { targetFilename, data } = req.body || {};
       if (!targetFilename || !data) return send(res, 400, { success: false, error: 'Missing targetFilename or data' });
-      const publicId = path.basename(targetFilename, path.extname(targetFilename));
+      const publicId = targetFilename.replace(/[^a-zA-Z0-9_-]/g, '-');
       const result = await cloudinary.uploader.upload(data, {
         folder: 'salon-assets',
         public_id: publicId,
         overwrite: true,
       });
+      // Save URL to BusinessInfo so frontend can read it
+      await BusinessInfo.findOneAndUpdate({}, { $set: { [`assetUrls.${publicId}`]: result.secure_url } }, { upsert: true });
       return send(res, 200, { success: true, fileUrl: result.secure_url });
+    }
+
+    // Get asset URLs
+    if (url === '/asset-urls' && method === 'GET') {
+      const info = await BusinessInfo.findOne().lean();
+      return send(res, 200, info?.assetUrls || {});
     }
 
     // Images list

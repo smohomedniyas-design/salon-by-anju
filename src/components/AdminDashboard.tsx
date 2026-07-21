@@ -79,6 +79,7 @@ export default function AdminDashboard() {
   });
   const [galleryFilter, setGalleryFilter] = useState('All');
   const [uploadError, setUploadError] = useState('');
+  const [assetUrls, setAssetUrls] = useState<Record<string, string>>({});
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
@@ -104,7 +105,11 @@ export default function AdminDashboard() {
         const res = await fetch(`${API_URL}/services`);
         const data = await res.json();
         setServices(data || []);
-      } else if (activeTab === 'gallery') {
+      } else if (activeTab === 'assets') {
+        const res = await fetch(`${API_URL}/asset-urls`);
+        const data = await res.json();
+        setAssetUrls(data || {});
+      }
         const [galleryRes, imageRes] = await Promise.all([
           fetch(`${API_URL}/gallery`),
           fetch(`${API_URL}/images`),
@@ -451,24 +456,23 @@ export default function AdminDashboard() {
   const handleUploadStaticImage = async (file: File, targetFilename: string, successMessage: string) => {
     try {
       setLoading(true);
-      const toDataURL = (file: File) =>
+      const toDataURL = (f: File) =>
         new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(String(reader.result));
           reader.onerror = reject;
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(f);
         });
-
       const dataUrl = await toDataURL(file);
-      
       const res = await fetch(`${API_URL}/upload-static`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ targetFilename, data: dataUrl }),
       });
       const data = await res.json();
-      
       if (data.success) {
+        const key = targetFilename.replace(/[^a-zA-Z0-9_-]/g, '-');
+        setAssetUrls((prev) => ({ ...prev, [key]: data.fileUrl }));
         setMessage(`✅ ${successMessage}`);
         setTimeout(() => setMessage(''), 3000);
       } else {
@@ -1008,114 +1012,61 @@ export default function AdminDashboard() {
         )}
 
         {activeTab === 'assets' && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-bold text-gold-200">Main Website Images</h2>
-                <p className="text-gold-100/50 mt-1">Upload new images to replace the main background and section images.</p>
-              </div>
-            </div>
-
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
             {/* Main Website Images */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Hero Image Card */}
-              <div className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">
-                <h3 className="text-lg font-semibold text-gold-200 mb-2">Hero Background</h3>
-                <p className="text-gold-100/50 text-sm mb-4">The main background image on the home page.</p>
-                <div className="h-40 bg-black-900 rounded-xl mb-4 overflow-hidden relative border border-gold-400/20">
-                  <img src={`/images/salon-interior.jpg?v=${Date.now()}`} className="w-full h-full object-cover" alt="Hero background" />
-                </div>
-                <label className="cursor-pointer mt-auto flex items-center justify-center gap-2 w-full py-3 bg-black-700 border border-gold-400/30 text-gold-200 font-semibold rounded-lg hover:border-gold-400 transition-colors">
-                  <Upload size={18} />
-                  Replace Image
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handleUploadStaticImage(file, 'salon-interior.jpg', 'Hero background updated!');
-                    }}
-                    className="hidden"
-                  />
-                </label>
+            <div>
+              <h2 className="text-xl font-bold text-gold-200 mb-1">Main Website Images</h2>
+              <p className="text-gold-100/50 text-sm mb-6">Upload to replace hero, about, and logo images. Changes go live immediately.</p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { label: 'Hero Background', key: 'hero-bg', fallback: 'https://res.cloudinary.com/pvr1nexp/image/upload/v1784575945/salon-assets/hero-bg.jpg', desc: 'Main background on home page.' },
+                  { label: 'About Section', key: 'about-image', fallback: 'https://res.cloudinary.com/pvr1nexp/image/upload/salon-assets/about-image.jpg', desc: 'Image in the About Us section.' },
+                  { label: 'Contact Section', key: 'contact-image', fallback: 'https://res.cloudinary.com/pvr1nexp/image/upload/salon-assets/contact-image.jpg', desc: 'Image in the Contact section.' },
+                ].map((asset) => (
+                  <div key={asset.key} className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">
+                    <h3 className="text-base font-semibold text-gold-200 mb-1">{asset.label}</h3>
+                    <p className="text-gold-100/50 text-xs mb-3">{asset.desc}</p>
+                    <div className="h-40 bg-black-900 rounded-xl mb-4 overflow-hidden border border-gold-400/20">
+                      <img
+                        src={assetUrls[asset.key] || asset.fallback}
+                        className="w-full h-full object-cover"
+                        alt={asset.label}
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    </div>
+                    <label className="cursor-pointer mt-auto flex items-center justify-center gap-2 w-full py-3 bg-black-700 border border-gold-400/30 text-gold-200 font-semibold rounded-lg hover:border-gold-400 transition-colors">
+                      <Upload size={18} />
+                      Replace Image
+                      <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUploadStaticImage(f, asset.key, `${asset.label} updated!`); }} className="hidden" />
+                    </label>
+                  </div>
+                ))}
               </div>
-
-              {/* About Image Card */}
-              <div className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">
-                <h3 className="text-lg font-semibold text-gold-200 mb-2">About Section</h3>
-                <p className="text-gold-100/50 text-sm mb-4">The image shown in the About Us section.</p>
-                <div className="h-40 bg-black-900 rounded-xl mb-4 overflow-hidden relative border border-gold-400/20">
-                  <img src={`/images/facial.jpg?v=${Date.now()}`} className="w-full h-full object-cover" alt="About section image" />
-                </div>
-                <label className="cursor-pointer mt-auto flex items-center justify-center gap-2 w-full py-3 bg-black-700 border border-gold-400/30 text-gold-200 font-semibold rounded-lg hover:border-gold-400 transition-colors">
-                  <Upload size={18} />
-                  Replace Image
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handleUploadStaticImage(file, 'facial.jpg', 'About image updated!');
-                    }}
-                    className="hidden"
-                  />
-                </label>
-              </div>
-
-              {/* Logo Card */}
-              <div className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">
-                <h3 className="text-lg font-semibold text-gold-200 mb-2">Salon Logo</h3>
-                <p className="text-gold-100/50 text-sm mb-4">The circular logo shown on the hero section.</p>
-                <div className="h-40 bg-black-900 rounded-xl mb-4 overflow-hidden relative border border-gold-400/20 flex items-center justify-center">
-                  <img src={`/uploads/upload_1.jpeg?v=${Date.now()}`} className="w-24 h-24 rounded-full object-cover" alt="Logo" />
-                </div>
-                <label className="cursor-pointer mt-auto flex items-center justify-center gap-2 w-full py-3 bg-black-700 border border-gold-400/30 text-gold-200 font-semibold rounded-lg hover:border-gold-400 transition-colors">
-                  <Upload size={18} />
-                  Replace Logo
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handleUploadStaticImage(file, '../uploads/upload_1.jpeg', 'Logo updated!');
-                    }}
-                    className="hidden"
-                  />
-                </label>
-              </div>
-
             </div>
 
             {/* Service Section Images */}
             <div>
-              <h2 className="text-xl font-bold text-gold-200 mb-2">Service Section Images</h2>
-              <p className="text-gold-100/50 text-sm mb-6">Replace the images shown on each service card on the website.</p>
+              <h2 className="text-xl font-bold text-gold-200 mb-1">Service Section Images</h2>
+              <p className="text-gold-100/50 text-sm mb-6">Replace images shown on each service card.</p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                  { label: 'Face Treatments', key: 'face-treatments', current: '/images/facial.jpg' },
-                  { label: 'Hair Services', key: 'hair-services', current: '/images/hair-color.jpg' },
-                  { label: 'Hand & Foot Care', key: 'hand-foot-care', current: '/images/nails.jpg' },
-                  { label: 'Waxing Services', key: 'waxing-services', current: '/images/salon-interior.jpg' },
-                  { label: 'Botox & Keratin', key: 'botox-keratin', current: '/images/hair-color.jpg' },
-                  { label: 'Bridal Packages', key: 'bridal-packages', current: '/images/bridal.jpg' },
+                  { label: 'Face Treatments', key: 'service-face-treatments', fallback: '/images/facial.jpg' },
+                  { label: 'Hair Services', key: 'service-hair-services', fallback: '/images/hair-color.jpg' },
+                  { label: 'Hand & Foot Care', key: 'service-hand-foot-care', fallback: '/images/nails.jpg' },
+                  { label: 'Waxing Services', key: 'service-waxing-services', fallback: '/images/salon-interior.jpg' },
+                  { label: 'Botox Treatment', key: 'service-botox-treatment', fallback: '/images/hair-color.jpg' },
+                  { label: 'Keratin Treatment', key: 'service-keratin-treatment', fallback: '/images/hair-color.jpg' },
+                  { label: 'Bridal Packages', key: 'service-bridal-packages', fallback: '/images/bridal.jpg' },
                 ].map((svc) => (
                   <div key={svc.key} className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">
-                    <h3 className="text-base font-semibold text-gold-200 mb-2">{svc.label}</h3>
+                    <h3 className="text-base font-semibold text-gold-200 mb-3">{svc.label}</h3>
                     <div className="h-36 bg-black-900 rounded-xl mb-4 overflow-hidden border border-gold-400/20">
-                      <img src={svc.current} className="w-full h-full object-cover" alt={svc.label} />
+                      <img src={assetUrls[svc.key] || svc.fallback} className="w-full h-full object-cover" alt={svc.label} />
                     </div>
                     <label className="cursor-pointer mt-auto flex items-center justify-center gap-2 w-full py-2.5 bg-black-700 border border-gold-400/30 text-gold-200 text-sm font-semibold rounded-lg hover:border-gold-400 transition-colors">
                       <Upload size={16} />
                       Replace Image
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) handleUploadStaticImage(file, `salon-assets/service-${svc.key}`, `${svc.label} image updated!`);
-                        }}
-                        className="hidden"
-                      />
+                      <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUploadStaticImage(f, svc.key, `${svc.label} image updated!`); }} className="hidden" />
                     </label>
                   </div>
                 ))}

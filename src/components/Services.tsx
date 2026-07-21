@@ -34,9 +34,15 @@ const imageMap: Record<string, string> = {
   'Bridal Packages': '/images/bridal.jpg',
 };
 
-function getServiceImage(category: string): string {
-  return imageMap[category] || '/images/salon-interior.jpg';
-}
+const serviceKeyMap: Record<string, string> = {
+  'Face Treatments': 'service-face-treatments',
+  'Hair Services': 'service-hair-services',
+  'Hand & Foot Care': 'service-hand-foot-care',
+  'Waxing Services': 'service-waxing-services',
+  'Botox Treatment (Prime Brand)': 'service-botox-treatment',
+  'Keratin Treatment (Prime Brand)': 'service-keratin-treatment',
+  'Bridal Packages': 'service-bridal-packages',
+};
 
 const descriptionMap: Record<string, string> = {
   'Face Treatments': 'Eyebrow shaping, threading, facials, clean-ups, and pimple treatments for radiant skin.',
@@ -95,15 +101,16 @@ const fallbackServices: ServiceCategory[] = [
 
 export default function Services() {
   const [categories, setCategories] = useState<ServiceCategory[]>(fallbackServices);
+  const [assetUrls, setAssetUrls] = useState<Record<string, string>>({});
 
   useEffect(() => {
     fetch('/api/services')
       .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setCategories(data);
-        }
-      })
+      .then((data) => { if (Array.isArray(data) && data.length > 0) setCategories(data); })
+      .catch(() => {});
+    fetch('/api/asset-urls')
+      .then((res) => res.json())
+      .then((data) => { if (data) setAssetUrls(data); })
       .catch(() => {});
   }, []);
 
@@ -131,7 +138,8 @@ export default function Services() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {categories.map((service, index) => {
             const Icon = iconMap[service.category] || Sparkles;
-            const image = getServiceImage(service.category);
+            const key = serviceKeyMap[service.category];
+            const image = (key && assetUrls[key]) || imageMap[service.category] || '/images/salon-interior.jpg';
             const desc = descriptionMap[service.category] || 'Expert salon care with premium products.';
 
             return (
