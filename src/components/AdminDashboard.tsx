@@ -1055,8 +1055,7 @@ export default function AdminDashboard() {
                   { label: 'Hair Services', key: 'service-hair-services', fallback: '/images/hair-color.jpg' },
                   { label: 'Hand & Foot Care', key: 'service-hand-foot-care', fallback: '/images/nails.jpg' },
                   { label: 'Waxing Services', key: 'service-waxing-services', fallback: '/images/salon-interior.jpg' },
-                  { label: 'Botox Treatment', key: 'service-botox-treatment', fallback: '/images/hair-color.jpg' },
-                  { label: 'Keratin Treatment', key: 'service-keratin-treatment', fallback: '/images/hair-color.jpg' },
+                  { label: 'Botox & Keratin (Prime Brand)', key: 'service-botox-keratin', fallback: '/images/hair-color.jpg' },
                   { label: 'Bridal Packages', key: 'service-bridal-packages', fallback: '/images/bridal.jpg' },
                 ].map((svc) => (
                   <div key={svc.key} className="bg-black-800 border border-gold-400/10 rounded-2xl p-5 flex flex-col">

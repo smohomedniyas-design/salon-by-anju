@@ -22,6 +22,7 @@ const iconMap: Record<string, typeof Sparkles> = {
   'Waxing Services': Flower2,
   'Botox Treatment (Prime Brand)': Palette,
   'Keratin Treatment (Prime Brand)': Palette,
+  'Botox & Keratin (Prime Brand)': Palette,
   'Bridal Packages': Crown,
 };
 
@@ -33,6 +34,7 @@ const imageMap: Record<string, string> = {
   'Waxing Services': '/images/salon-interior.jpg',
   'Botox Treatment (Prime Brand)': '/images/hair-color.jpg',
   'Keratin Treatment (Prime Brand)': '/images/hair-color.jpg',
+  'Botox & Keratin (Prime Brand)': '/images/hair-color.jpg',
   'Bridal Packages': '/images/bridal.jpg',
 };
 
@@ -42,8 +44,9 @@ const serviceKeyMap: Record<string, string> = {
   'Hair Services': 'service-hair-services',
   'Hand & Foot Care': 'service-hand-foot-care',
   'Waxing Services': 'service-waxing-services',
-  'Botox Treatment (Prime Brand)': 'service-botox-treatment',
-  'Keratin Treatment (Prime Brand)': 'service-keratin-treatment',
+  'Botox Treatment (Prime Brand)': 'service-botox-keratin',
+  'Keratin Treatment (Prime Brand)': 'service-botox-keratin',
+  'Botox & Keratin (Prime Brand)': 'service-botox-keratin',
   'Bridal Packages': 'service-bridal-packages',
 };
 
@@ -53,8 +56,9 @@ const descriptionMap: Record<string, string> = {
   'Hair Services': 'Precision haircuts, coloring, conditioning, oil massages, and professional styling.',
   'Hand & Foot Care': 'Manicures, pedicures, gel & acrylic nails for perfectly polished hands and feet.',
   'Waxing Services': 'Smooth hair removal for legs, arms, underarms, full body & Brazilian waxing.',
-  'Botox Treatment (Prime Brand)': 'Premium treatments using prime brand products for silky, manageable hair.',
-  'Keratin Treatment (Prime Brand)': 'Premium smoothing treatments for healthier, frizz-free hair.',
+  'Botox Treatment (Prime Brand)': 'Premium Botox & Keratin treatments using prime brand products for silky, frizz-free hair.',
+  'Keratin Treatment (Prime Brand)': 'Premium Botox & Keratin treatments using prime brand products for silky, frizz-free hair.',
+  'Botox & Keratin (Prime Brand)': 'Premium Botox & Keratin treatments using prime brand products for silky, frizz-free hair.',
   'Bridal Packages': 'Complete bridal transformations including makeup, hair, and saree draping.',
 };
 
@@ -138,51 +142,82 @@ export default function Services() {
           <div className="section-divider max-w-xs mx-auto mt-4 sm:mt-6" />
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {categories.map((service, index) => {
-            const Icon = iconMap[service.category] || Sparkles;
-            const key = serviceKeyMap[service.category];
-            const image = (key && assetUrls[key]) || imageMap[service.category] || '/images/salon-interior.jpg';
-            const desc = descriptionMap[service.category] || 'Expert salon care with premium products.';
-
-            return (
-              <motion.div
-                key={service.category}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-xl sm:rounded-2xl border border-gold-400/10 hover:border-gold-400/30 transition-all duration-500"
-              >
-                <div className="relative h-48 sm:h-56 overflow-hidden">
-                  <img
-                    src={image}
-                    alt={service.category}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black-900 via-black-900/50 to-transparent" />
-                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2.5 sm:p-3 rounded-full gold-gradient-bg">
-                    <Icon size={20} className="text-black-900" />
-                  </div>
-                </div>
-
-                <div className="p-4 sm:p-6">
-                  <h3 className="font-playfair text-lg sm:text-xl font-semibold text-gold-200 mb-1.5 sm:mb-2 group-hover:text-gold-400 transition-colors">
-                    {service.category}
-                  </h3>
-                  <p className="text-gold-100/50 text-xs sm:text-sm leading-relaxed">
-                    {desc}
-                  </p>
-                </div>
-
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                  <div className="absolute inset-0 bg-gold-400/5" />
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+        {/* Services Grid — exclude Special Promotions, merge Botox+Keratin */}
+        {(() => {
+          const seen = new Set<string>();
+          const regular: typeof categories = [];
+          let promo = null;
+          for (const svc of categories) {
+            if (svc.category === 'Special Promotions') { promo = svc; continue; }
+            const displayName =
+              svc.category === 'Botox Treatment (Prime Brand)' || svc.category === 'Keratin Treatment (Prime Brand)'
+                ? 'Botox & Keratin (Prime Brand)'
+                : svc.category;
+            if (!seen.has(displayName)) { seen.add(displayName); regular.push({ ...svc, category: displayName }); }
+          }
+          const allCards = [...regular, ...(promo ? [promo] : [])];
+          return (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {allCards.map((service, index) => {
+                const isPromo = service.category === 'Special Promotions';
+                const Icon = iconMap[service.category] || Sparkles;
+                const key = serviceKeyMap[service.category];
+                const image = (key && assetUrls[key]) || imageMap[service.category] || '/images/salon-interior.jpg';
+                const desc = descriptionMap[service.category] || 'Expert salon care with premium products.';
+                return (
+                  <motion.div
+                    key={service.category}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className={`group relative overflow-hidden rounded-xl sm:rounded-2xl border transition-all duration-500 ${
+                      isPromo
+                        ? 'border-gold-400/50 hover:border-gold-400 sm:col-span-2 lg:col-span-3'
+                        : 'border-gold-400/10 hover:border-gold-400/30'
+                    }`}
+                  >
+                    <div className={`relative overflow-hidden ${ isPromo ? 'h-48 sm:h-56' : 'h-48 sm:h-56' }`}>
+                      <img
+                        src={image}
+                        alt={service.category}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className={`absolute inset-0 ${ isPromo ? 'bg-gradient-to-t from-black-900 via-black-900/60 to-black-900/20' : 'bg-gradient-to-t from-black-900 via-black-900/50 to-transparent' }`} />
+                      {isPromo && (
+                        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 px-3 py-1 rounded-full gold-gradient-bg">
+                          <span className="text-black-900 text-xs font-bold uppercase tracking-wider">✨ Special Offer</span>
+                        </div>
+                      )}
+                      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2.5 sm:p-3 rounded-full gold-gradient-bg">
+                        <Icon size={20} className="text-black-900" />
+                      </div>
+                    </div>
+                    <div className={`p-4 sm:p-6 ${ isPromo ? 'sm:flex sm:items-center sm:justify-between' : '' }`}>
+                      <div>
+                        <h3 className="font-playfair text-lg sm:text-xl font-semibold text-gold-200 mb-1.5 sm:mb-2 group-hover:text-gold-400 transition-colors">
+                          {service.category}
+                        </h3>
+                        <p className="text-gold-100/50 text-xs sm:text-sm leading-relaxed">{desc}</p>
+                      </div>
+                      {isPromo && (
+                        <a
+                          href="#prices"
+                          className="mt-4 sm:mt-0 sm:ml-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full gold-gradient-bg text-black-900 text-sm font-bold whitespace-nowrap hover:opacity-90 transition-opacity shrink-0"
+                        >
+                          View Offers
+                        </a>
+                      )}
+                    </div>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <div className={`absolute inset-0 ${ isPromo ? 'bg-gold-400/8' : 'bg-gold-400/5' }`} />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          );
+        })()}
       </div>
     </section>
   );
