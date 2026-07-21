@@ -1050,6 +1050,7 @@ export default function AdminDashboard() {
               <p className="text-gold-100/50 text-sm mb-6">Replace images shown on each service card.</p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
+                  { label: 'Special Promotions', key: 'service-special-promotions', fallback: '/images/bridal.jpg' },
                   { label: 'Face Treatments', key: 'service-face-treatments', fallback: '/images/facial.jpg' },
                   { label: 'Hair Services', key: 'service-hair-services', fallback: '/images/hair-color.jpg' },
                   { label: 'Hand & Foot Care', key: 'service-hand-foot-care', fallback: '/images/nails.jpg' },

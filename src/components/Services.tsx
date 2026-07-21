@@ -15,6 +15,7 @@ interface ServiceCategory {
 }
 
 const iconMap: Record<string, typeof Sparkles> = {
+  'Special Promotions': Sparkles,
   'Face Treatments': Sparkles,
   'Hair Services': Scissors,
   'Hand & Foot Care': Hand,
@@ -25,6 +26,7 @@ const iconMap: Record<string, typeof Sparkles> = {
 };
 
 const imageMap: Record<string, string> = {
+  'Special Promotions': '/images/bridal.jpg',
   'Face Treatments': '/images/facial.jpg',
   'Hair Services': '/images/hair-color.jpg',
   'Hand & Foot Care': '/images/nails.jpg',
@@ -35,6 +37,7 @@ const imageMap: Record<string, string> = {
 };
 
 const serviceKeyMap: Record<string, string> = {
+  'Special Promotions': 'service-special-promotions',
   'Face Treatments': 'service-face-treatments',
   'Hair Services': 'service-hair-services',
   'Hand & Foot Care': 'service-hand-foot-care',
@@ -45,6 +48,7 @@ const serviceKeyMap: Record<string, string> = {
 };
 
 const descriptionMap: Record<string, string> = {
+  'Special Promotions': 'Exclusive deals and limited-time offers on our most popular salon services.',
   'Face Treatments': 'Eyebrow shaping, threading, facials, clean-ups, and pimple treatments for radiant skin.',
   'Hair Services': 'Precision haircuts, coloring, conditioning, oil massages, and professional styling.',
   'Hand & Foot Care': 'Manicures, pedicures, gel & acrylic nails for perfectly polished hands and feet.',
